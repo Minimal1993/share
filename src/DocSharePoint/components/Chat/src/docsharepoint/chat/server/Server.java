@@ -27,6 +27,8 @@ import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * represents the decentralized server
@@ -96,11 +98,15 @@ public class Server {
     }
     
     /**
-     * get the listening port
-     * @return int
+     * get peers list to send it to the client which requested it
+     * @return String
      */
-    public int getListeningPort(){
-        return this._port;
+    public String getPeersList(){
+        String list = "#\r\n";
+        for(Long key : this._peers.keySet()){
+            list += "Peer - " + key + "\r\n";
+        }
+        return list;
     }
     
     /**
@@ -121,12 +127,45 @@ public class Server {
             System.err.println("Error: sending message to client.");
         }
     }
+    
+    public void removeConnection(Socket client){
+        
+        // -----------------------------------------------------------
+        // synchronize peers list because another thread might be using it
+        // -----------------------------------------------------------
+        synchronized(_peers){
+            try {
+
+                // -----------------------------------------------------------
+                // close connection with client
+                // -----------------------------------------------------------
+                client.close();
+
+            } catch (IOException ex) {}
+
+
+            // -----------------------------------------------------------
+            // remove client from peers list
+            // -----------------------------------------------------------
+            this._peers.values().remove(client);
+        }
+    }
 
     //generate unique id for each connected peer
     private long generateID(){
+        
+        // -----------------------------------------------------------
+        // get current date
+        // -----------------------------------------------------------
         Calendar currentdate = Calendar.getInstance();
         SimpleDateFormat dformatter = new SimpleDateFormat("ddmmyyyy");
         String dateNow = dformatter.format(currentdate.getTime());
+        
+        
+        // -----------------------------------------------------------
+        // add one to the current date and return
+        // -----------------------------------------------------------
         return Long.parseLong(dateNow) + Server._peerscounter++;
+        
     }
 }

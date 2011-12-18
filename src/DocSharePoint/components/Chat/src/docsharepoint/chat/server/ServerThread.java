@@ -66,10 +66,11 @@ public class ServerThread extends Thread{
                     // -----------------------------------------------------------
                     // respond to the client
                     // -----------------------------------------------------------
-                    this._server.sendmessage(message, this._clientsocket);
+                    this._server.sendmessage(this._server.getPeersList(), this._clientsocket);
                 
                 }
                 else{
+                    
                     // -----------------------------------------------------------
                     // respond to the client
                     // -----------------------------------------------------------
@@ -79,16 +80,13 @@ public class ServerThread extends Thread{
                 
             }
             
-        } catch (IOException ex) {
-        }
+        } catch (IOException ex) {}
         finally{
-            try {
-                
-                // -----------------------------------------------------------
-                // close client connection if was terminated for some reason
-                // -----------------------------------------------------------
-                this._clientsocket.close();
-            } catch (IOException ex) {}
+            
+            // -----------------------------------------------------------
+            // close client connection if was terminated for some reason
+            // -----------------------------------------------------------
+            this._server.removeConnection(this._clientsocket);
         }
     }
 }
