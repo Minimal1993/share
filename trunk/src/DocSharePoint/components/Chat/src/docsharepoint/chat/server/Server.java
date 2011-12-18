@@ -24,6 +24,9 @@ import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
+import java.text.SimpleDateFormat;
+import java.util.Calendar;
+import java.util.HashMap;
 
 /**
  * represents the decentralized server
@@ -36,6 +39,8 @@ import java.net.Socket;
 public class Server {
     private int _port;
     private ServerSocket _socket;
+    private HashMap<Long, Socket> _peers;
+    private static long _peerscounter = 0;
     
     /**
      * constructor specifying server's listening port
@@ -43,6 +48,7 @@ public class Server {
      */
     public Server(int port){
         this._port = port;
+        this._peers = new HashMap<Long, Socket>();
     }
     
     /**
@@ -67,7 +73,15 @@ public class Server {
                 // accept connection
                 // -----------------------------------------------------------
                 Socket client = this._socket.accept();
-                System.out.println("Connection accepted from " + client);
+                
+                
+                // -----------------------------------------------------------
+                // add client to peers list
+                // -----------------------------------------------------------
+                long id = this.generateID();
+                this._peers.put(id, client);
+                System.out.println("Connection accepted from " + client + ". Peer ID " + id);
+                this.sendmessage("#Your ID is " + id, client);
                 
                 // -----------------------------------------------------------
                 // start client thread
@@ -106,5 +120,13 @@ public class Server {
         } catch (IOException ex) {
             System.err.println("Error: sending message to client.");
         }
+    }
+
+    //generate unique id for each connected peer
+    private long generateID(){
+        Calendar currentdate = Calendar.getInstance();
+        SimpleDateFormat dformatter = new SimpleDateFormat("ddmmyyyy");
+        String dateNow = dformatter.format(currentdate.getTime());
+        return Long.parseLong(dateNow) + Server._peerscounter++;
     }
 }
