@@ -30,6 +30,7 @@ import java.net.UnknownHostException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JPanel;
+import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
@@ -68,15 +69,16 @@ public class Client extends JFrame implements Runnable{
         this._panel.setLayout(null);
         
         this._area = new JTextArea();
+        JScrollPane scroll = new JScrollPane(this._area);
         this._area.setEditable(false);
         this._text = new JTextField();
         this._button = new JButton("Send");
         
-        this._panel.add(this._area);
+        this._panel.add(scroll);
         this._panel.add(this._text);
         this._panel.add(this._button);
         
-        this._area.setBounds(5, 5, 300, 200);
+        scroll.setBounds(5, 5, 300, 200);
         this._text.setBounds(5, 210, 300, 20);
         this._button.setBounds(315, 210, 80, 20);
         
@@ -174,8 +176,7 @@ public class Client extends JFrame implements Runnable{
                 else
                     this._area.append(":" + message + "\r\n");
                 
-            } catch (IOException ex) {
-                //System.err.println("Unable to read the message.");
+            } catch (Exception ex) {
                 System.exit(0);
             }
         }
