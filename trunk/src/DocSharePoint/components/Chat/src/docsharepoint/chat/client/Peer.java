@@ -31,7 +31,6 @@ import java.net.Socket;
  */
 public class Peer {
     private Socket _socket;
-    private int _listeningport;
     private PeerServer _server;
     
     /**
@@ -40,25 +39,6 @@ public class Peer {
      */
     public Peer(Socket client){
         this._socket = client;
-        this._listeningport = 11888;
-    }
-    
-    /**
-     * constructor specifying socket and port
-     * @param client
-     * @param port 
-     */
-    public Peer(Socket client, int port){
-        this._socket = client;
-        this._listeningport = port;
-    }
-    
-    /**
-     * start local peer chat server
-     */
-    public void startChatServer(){
-        this._server = new PeerServer(this._listeningport);
-        this._server.start();
     }
     
     /**
@@ -74,7 +54,7 @@ public class Peer {
      * @return int
      */
     public int getListeningPort(){
-        return this._listeningport;
+        return 11888;
     }
     
     /**
@@ -119,5 +99,13 @@ public class Peer {
     @Override
     public String toString(){
         return this._socket.toString();
+    }
+    
+    /**
+     * start local peer chat server
+     */
+    public void startChatServer(){
+        this._server = new PeerServer(11888);
+        this._server.start();
     }
 }

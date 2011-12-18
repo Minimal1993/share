@@ -113,6 +113,7 @@ public class Server {
      */
     public String getPeerInfo(long peerid){
         String list = "#\r\n";
+        if(!this._peers.containsKey(peerid)) return "#Peer ID does not exists.";
         Peer peer = this._peers.get(peerid);
         list += "Peer ID: " + peerid + "\r\n" +  
                 "Peer ip: " + peer.getIP() + "\r\n" + 
