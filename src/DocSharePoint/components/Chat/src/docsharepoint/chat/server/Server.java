@@ -107,6 +107,20 @@ public class Server {
     }
     
     /**
+     * get detailed info about selected peer id
+     * @param peerid
+     * @return String
+     */
+    public String getPeerInfo(long peerid){
+        String list = "#\r\n";
+        Peer peer = this._peers.get(peerid);
+        list += "Peer ID: " + peerid + "\r\n" +  
+                "Peer ip: " + peer.getIP() + "\r\n" + 
+                "Peer port: " + peer.getListeningPort() + "\r\n";
+        return list;
+    }
+    
+    /**
      * send message to client
      * @param message
      * @param client 
