@@ -34,7 +34,7 @@ import java.util.HashMap;
  * and get a list of available peers on the network to
  * communicate with.
  * 
- * @author developer
+ * @author George Karpouzas
  */
 public class Server {
     private int _port;
