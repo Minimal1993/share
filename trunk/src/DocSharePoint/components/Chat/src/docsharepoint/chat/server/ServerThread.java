@@ -69,6 +69,10 @@ public class ServerThread extends Thread{
                     this._server.sendmessage(this._server.getPeersList(), this._clientsocket);
                 
                 }
+                else if(message.matches("#info [0-9]{8,}")){
+                    long id = Long.parseLong(message.replace("#info ", ""));
+                    this._server.sendmessage(this._server.getPeerInfo(id), this._clientsocket);
+                }
                 else{
                     
                     // -----------------------------------------------------------
