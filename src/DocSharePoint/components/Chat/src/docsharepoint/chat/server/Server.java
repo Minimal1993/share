@@ -20,15 +20,13 @@
  */
 package docsharepoint.chat.server;
 
+import docsharepoint.chat.client.Peer;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
-import java.net.Socket;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.HashMap;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * represents the decentralized server
@@ -41,7 +39,7 @@ import java.util.logging.Logger;
 public class Server {
     private int _port;
     private ServerSocket _socket;
-    private HashMap<Long, Socket> _peers;
+    private HashMap<Long, Peer> _peers;
     private static long _peerscounter = 0;
     
     /**
@@ -50,7 +48,7 @@ public class Server {
      */
     public Server(int port){
         this._port = port;
-        this._peers = new HashMap<Long, Socket>();
+        this._peers = new HashMap<Long, Peer>();
     }
     
     /**
@@ -74,21 +72,20 @@ public class Server {
                 // -----------------------------------------------------------
                 // accept connection
                 // -----------------------------------------------------------
-                Socket client = this._socket.accept();
-                
+                Peer peer = new Peer(this._socket.accept());
                 
                 // -----------------------------------------------------------
                 // add client to peers list
                 // -----------------------------------------------------------
                 long id = this.generateID();
-                this._peers.put(id, client);
-                System.out.println("Connection accepted from " + client + ". Peer ID " + id);
-                this.sendmessage("#Your ID is " + id, client);
+                this._peers.put(id, peer);
+                System.out.println("Connection accepted from " + peer + ". Peer ID " + id);
+                this.sendmessage("#Your ID is " + id, peer);
                 
                 // -----------------------------------------------------------
                 // start client thread
                 // -----------------------------------------------------------
-                new ServerThread(this, client).start();
+                new ServerThread(this, peer).start();
             }
             
             
@@ -114,7 +111,7 @@ public class Server {
      * @param message
      * @param client 
      */
-    public void sendmessage(String message, Socket client){
+    public void sendmessage(String message, Peer client){
         try {
             
             // -----------------------------------------------------------
@@ -128,7 +125,7 @@ public class Server {
         }
     }
     
-    public void removeConnection(Socket client){
+    public void removeConnection(Peer client){
         
         // -----------------------------------------------------------
         // synchronize peers list because another thread might be using it

@@ -20,9 +20,9 @@
  */
 package docsharepoint.chat.server;
 
+import docsharepoint.chat.client.Peer;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.net.Socket;
 
 /**
  * represents the server thread
@@ -31,14 +31,14 @@ import java.net.Socket;
  */
 public class ServerThread extends Thread{
     private Server _server;
-    private Socket _clientsocket;
+    private Peer _clientsocket;
     
     /**
      * contractor specifying server and client socket
      * @param server
      * @param client 
      */
-    public ServerThread(Server server, Socket client){
+    public ServerThread(Server server, Peer client){
         this._server = server;
         this._clientsocket = client;
     }

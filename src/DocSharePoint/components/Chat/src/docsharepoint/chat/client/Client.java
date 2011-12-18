@@ -170,9 +170,10 @@ public class Client extends JFrame implements Runnable{
         try {
             
             // -----------------------------------------------------------
-            // send message to the server
+            // send message to the server only if message is prefixed with #
             // -----------------------------------------------------------
-            this._output.writeUTF(message);
+            if(message.startsWith("#"))
+                this._output.writeUTF(message);
             
             
             // -----------------------------------------------------------
