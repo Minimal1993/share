@@ -1,7 +1,7 @@
 /*
  *  DocSharePoint
  *  Open Source Distributed p2p system based on pastry
- *  Copyright (C) 2010 DocSharePoint KARPOUZAS GEORGE
+ *  Copyright (C) 2010-2011 DocSharePoint KARPOUZAS GEORGE
  *
  *  http://docsharepoint.sourceforge.net/
  *
@@ -84,7 +84,7 @@ public class AboutDialogPanel extends AbstractPanel {
 
         textarea = new TextArea("DocSharePoint - "
     + "Open Source Distributed p2p application based on pastry\r\n"
-   + "Copyright (C) 2010 DocSharePoint KARPOUZAS GEORGE\r\n\r\n"
+   + "Copyright (C) 2010-2011 DocSharePoint KARPOUZAS GEORGE\r\n\r\n"
    + "http://docsharepoint.sourceforge.net/\r\n\r\n"
     + "This program is free software: you can redistribute it and/or modify\r\n"
     + "it under the terms of the GNU General Public License as published by\r\n"
