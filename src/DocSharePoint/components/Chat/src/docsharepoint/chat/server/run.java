@@ -30,6 +30,7 @@ public class run {
      * @param args 
      */
     public static void main(String args[]){
-        
+        Server decentralized_server = new Server(11880);
+        decentralized_server.start();
     }
 }

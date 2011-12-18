@@ -20,6 +20,7 @@
  */
 package docsharepoint.chat.server;
 
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -42,6 +43,12 @@ public class Server {
      */
     public Server(int port){
         this._port = port;
+    }
+    
+    /**
+     * start the server
+     */
+    public void start(){
         try {
             
             // -----------------------------------------------------------
@@ -55,8 +62,17 @@ public class Server {
             // accepting connections
             // -----------------------------------------------------------
             while(true){
+                
+                // -----------------------------------------------------------
+                // accept connection
+                // -----------------------------------------------------------
                 Socket client = this._socket.accept();
                 System.out.println("Connection accepted from " + client);
+                
+                // -----------------------------------------------------------
+                // start client thread
+                // -----------------------------------------------------------
+                new ServerThread(this, client).start();
             }
             
             
@@ -71,5 +87,24 @@ public class Server {
      */
     public int getListeningPort(){
         return this._port;
+    }
+    
+    /**
+     * send message to client
+     * @param message
+     * @param client 
+     */
+    public void sendmessage(String message, Socket client){
+        try {
+            
+            // -----------------------------------------------------------
+            // send message
+            // -----------------------------------------------------------
+            DataOutputStream outputtoclient = new DataOutputStream(client.getOutputStream());
+            outputtoclient.writeUTF(message);
+            
+        } catch (IOException ex) {
+            System.err.println("Error: sending message to client.");
+        }
     }
 }
