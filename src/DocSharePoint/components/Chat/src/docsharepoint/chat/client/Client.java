@@ -154,7 +154,10 @@ public class Client extends JFrame implements Runnable{
                 // get message
                 // -----------------------------------------------------------
                 message = this._input.readUTF();
-                this._area.append(": " + message + "\r\n");
+                if(message.startsWith("#"))
+                    this._area.append("#" + message + "\r\n");
+                else
+                    this._area.append(":" + message + "\r\n");
                 
             } catch (IOException ex) {
                 //System.err.println("Unable to read the message.");

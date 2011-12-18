@@ -61,11 +61,22 @@ public class ServerThread extends Thread{
                 // read client's message
                 // -----------------------------------------------------------
                 String message = inputfromclient.readUTF();
+                if(message.compareTo("#list")==0){
+                    
+                    // -----------------------------------------------------------
+                    // respond to the client
+                    // -----------------------------------------------------------
+                    this._server.sendmessage(message, this._clientsocket);
                 
-                // -----------------------------------------------------------
-                // respond to the client
-                // -----------------------------------------------------------
-                this._server.sendmessage(message, this._clientsocket);
+                }
+                else{
+                    // -----------------------------------------------------------
+                    // respond to the client
+                    // -----------------------------------------------------------
+                    this._server.sendmessage("Unknown command!", this._clientsocket);
+                    
+                }
+                
             }
             
         } catch (IOException ex) {
