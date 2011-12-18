@@ -30,6 +30,7 @@ public class run {
      * @param args 
      */
     public static void main(String args[]){
-        
+        Client peer = new Client("localhost", 11880);
+        peer.connect();
     }
 }

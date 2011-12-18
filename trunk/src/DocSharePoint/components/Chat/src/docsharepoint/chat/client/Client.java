@@ -20,25 +20,35 @@
  */
 package docsharepoint.chat.client;
 
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import java.util.logging.Level;
-import java.util.logging.Logger;
+import javax.swing.JButton;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 /**
  * represents a peer on the network
  * 
  * @author developer
  */
-public class Client implements Runnable{
+public class Client extends JFrame implements Runnable{
     private Socket _socket;
     private String _host;
     private int _port;
     private DataOutputStream _output;
     private DataInputStream _input;
+    
+    private JPanel _panel;
+    private JTextArea _area;
+    private JTextField _text;
+    private JButton _button;
     
     /**
      * constructor providing server-host and server listening port
@@ -46,6 +56,49 @@ public class Client implements Runnable{
      * @param port 
      */
     public Client(String host, int port){
+        
+        // -----------------------------------------------------------
+        // interface
+        // -----------------------------------------------------------
+        this.setTitle("P2P Chat");
+        this.setResizable(false);
+        this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+        this._panel = new JPanel();
+        this._panel.setLayout(null);
+        
+        this._area = new JTextArea();
+        this._area.setEditable(false);
+        this._text = new JTextField();
+        this._button = new JButton("Send");
+        
+        this._panel.add(this._area);
+        this._panel.add(this._text);
+        this._panel.add(this._button);
+        
+        this._area.setBounds(5, 5, 300, 200);
+        this._text.setBounds(5, 210, 300, 20);
+        this._button.setBounds(315, 210, 80, 20);
+        
+        this._button.addActionListener(new ActionListener(){
+
+            /**
+             * do something!
+             */
+            @Override
+            public void actionPerformed(ActionEvent ae) {
+                sendMessage(_text.getText());
+            }
+            
+        });
+        
+        this.setBounds(200, 200, 430, 280);
+        this.setContentPane(this._panel);
+        this.setVisible(true);
+        
+        
+        // -----------------------------------------------------------
+        // init
+        // -----------------------------------------------------------
         this._host = host;
         this._port = port;
     }
@@ -92,8 +145,40 @@ public class Client implements Runnable{
      */
     @Override
     public void run() {
+        
         while(true){
+            String message = "";
+            try {
+                
+                // -----------------------------------------------------------
+                // get message
+                // -----------------------------------------------------------
+                message = this._input.readUTF();
+                this._area.append(": " + message + "\r\n");
+                
+            } catch (IOException ex) {
+                //System.err.println("Unable to read the message.");
+                System.exit(0);
+            }
+        }
+    }
+    
+    private void sendMessage(String message){
+        try {
             
+            // -----------------------------------------------------------
+            // send message to the server
+            // -----------------------------------------------------------
+            this._output.writeUTF(message);
+            
+            
+            // -----------------------------------------------------------
+            // clear text field
+            // -----------------------------------------------------------
+            this._text.setText("");
+            
+        } catch (IOException ex) {
+            System.err.println("Error: Sending message to the server.");
         }
     }
 }

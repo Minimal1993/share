@@ -61,7 +61,6 @@ public class ServerThread extends Thread{
                 // read client's message
                 // -----------------------------------------------------------
                 String message = inputfromclient.readUTF();
-                System.out.println("Client says: " + message);
                 
                 // -----------------------------------------------------------
                 // respond to the client
@@ -70,7 +69,6 @@ public class ServerThread extends Thread{
             }
             
         } catch (IOException ex) {
-            System.err.println("Error: Reading from client.");
         }
         finally{
             try {
