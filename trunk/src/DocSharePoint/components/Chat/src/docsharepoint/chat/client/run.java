@@ -21,9 +21,15 @@
 package docsharepoint.chat.client;
 
 /**
- *
+ * run client - peer
  * @author developer
  */
 public class run {
-    
+    /**
+     * main method
+     * @param args 
+     */
+    public static void main(String args[]){
+        
+    }
 }

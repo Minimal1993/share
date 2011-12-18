@@ -21,9 +21,15 @@
 package docsharepoint.chat.server;
 
 /**
- *
+ * run decentralized server
  * @author developer
  */
 public class run {
-    
+    /**
+     * main method
+     * @param args 
+     */
+    public static void main(String args[]){
+        
+    }
 }
