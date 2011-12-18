@@ -20,11 +20,80 @@
  */
 package docsharepoint.chat.client;
 
+import java.io.DataInputStream;
+import java.io.DataOutputStream;
+import java.io.IOException;
+import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * represents a peer on the network
  * 
  * @author developer
  */
-public class Client {
+public class Client implements Runnable{
+    private Socket _socket;
+    private String _host;
+    private int _port;
+    private DataOutputStream _output;
+    private DataInputStream _input;
     
+    /**
+     * constructor providing server-host and server listening port
+     * @param host
+     * @param port 
+     */
+    public Client(String host, int port){
+        this._host = host;
+        this._port = port;
+    }
+    
+    /**
+     * connect to the server
+     */
+    public void connect(){
+        try {
+            
+            // -----------------------------------------------------------
+            // connect to server
+            // -----------------------------------------------------------
+            this._socket = new Socket(this._host, this._port);
+            System.out.println("Connected to server.");
+            
+            
+            // -----------------------------------------------------------
+            // get output stream
+            // -----------------------------------------------------------
+            this._output = new DataOutputStream(this._socket.getOutputStream());
+            
+            
+            // -----------------------------------------------------------
+            // get input stream
+            // -----------------------------------------------------------
+            this._input = new DataInputStream(this._socket.getInputStream());
+            
+            
+            // -----------------------------------------------------------
+            // start the thread to handle communication
+            // -----------------------------------------------------------
+            new Thread(this).start();
+            
+        } catch (UnknownHostException ex) {
+            System.err.println("Error: Unable to connect to the server.");
+        } catch (IOException ex) {
+            System.err.println("Error: Unable to connect to the server.");
+        }
+    }
+
+    /**
+     * handle communication on separated thread
+     */
+    @Override
+    public void run() {
+        while(true){
+            
+        }
+    }
 }
