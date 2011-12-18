@@ -20,6 +20,8 @@
  */
 package docsharepoint.chat.server;
 
+import java.io.DataInputStream;
+import java.io.IOException;
 import java.net.Socket;
 
 /**
@@ -27,7 +29,7 @@ import java.net.Socket;
  * this thread is created for every accepted client connection
  * @author developer
  */
-public class ServerThread {
+public class ServerThread extends Thread{
     private Server _server;
     private Socket _clientsocket;
     
@@ -39,5 +41,45 @@ public class ServerThread {
     public ServerThread(Server server, Socket client){
         this._server = server;
         this._clientsocket = client;
+    }
+    
+    /**
+     * run the thread
+     */
+    @Override
+    public void run(){
+        try {
+            
+            // -----------------------------------------------------------
+            // read from client
+            // -----------------------------------------------------------
+            DataInputStream inputfromclient = new DataInputStream(this._clientsocket.getInputStream());
+            
+            while(true){
+                
+                // -----------------------------------------------------------
+                // read client's message
+                // -----------------------------------------------------------
+                String message = inputfromclient.readUTF();
+                System.out.println("Client says: " + message);
+                
+                // -----------------------------------------------------------
+                // respond to the client
+                // -----------------------------------------------------------
+                this._server.sendmessage(message, this._clientsocket);
+            }
+            
+        } catch (IOException ex) {
+            System.err.println("Error: Reading from client.");
+        }
+        finally{
+            try {
+                
+                // -----------------------------------------------------------
+                // close client connection if was terminated for some reason
+                // -----------------------------------------------------------
+                this._clientsocket.close();
+            } catch (IOException ex) {}
+        }
     }
 }
