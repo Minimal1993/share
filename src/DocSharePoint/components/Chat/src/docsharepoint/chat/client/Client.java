@@ -36,10 +36,11 @@ import javax.swing.JTextField;
 /**
  * represents a peer on the network
  * 
- * @author developer
+ * @author George Karpouzas
  */
 public class Client extends JFrame implements Runnable{
     private Socket _socket;
+    private Peer _peer;
     private String _host;
     private int _port;
     private DataOutputStream _output;
@@ -113,6 +114,14 @@ public class Client extends JFrame implements Runnable{
             // connect to server
             // -----------------------------------------------------------
             this._socket = new Socket(this._host, this._port);
+            
+            
+            // -----------------------------------------------------------
+            // create a local peer
+            // -----------------------------------------------------------
+            this._peer = new Peer(this._socket);
+            
+            
             System.out.println("Connected to server.");
             
             
@@ -133,6 +142,12 @@ public class Client extends JFrame implements Runnable{
             // -----------------------------------------------------------
             new Thread(this).start();
             
+            
+            // -----------------------------------------------------------
+            // start peers server for chating
+            // -----------------------------------------------------------
+            this._peer.startChatServer();
+                        
         } catch (UnknownHostException ex) {
             System.err.println("Error: Unable to connect to the server.");
         } catch (IOException ex) {

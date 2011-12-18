@@ -22,7 +22,7 @@ package docsharepoint.chat.server;
 
 /**
  * run decentralized server
- * @author developer
+ * @author George Karpouzas
  */
 public class run {
     /**

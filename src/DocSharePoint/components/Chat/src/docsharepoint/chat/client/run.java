@@ -22,7 +22,7 @@ package docsharepoint.chat.client;
 
 /**
  * run client - peer
- * @author developer
+ * @author George Karpouzas
  */
 public class run {
     /**

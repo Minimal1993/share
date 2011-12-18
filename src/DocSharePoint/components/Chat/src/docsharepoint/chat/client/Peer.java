@@ -27,11 +27,12 @@ import java.net.Socket;
 
 /**
  * represents a peer
- * @author developer
+ * @author George Karpouzas
  */
 public class Peer {
     private Socket _socket;
     private int _listeningport;
+    private PeerServer _server;
     
     /**
      * constructor specifying socket
@@ -50,6 +51,14 @@ public class Peer {
     public Peer(Socket client, int port){
         this._socket = client;
         this._listeningport = port;
+    }
+    
+    /**
+     * start local peer chat server
+     */
+    public void startChatServer(){
+        this._server = new PeerServer(this._listeningport);
+        this._server.start();
     }
     
     /**

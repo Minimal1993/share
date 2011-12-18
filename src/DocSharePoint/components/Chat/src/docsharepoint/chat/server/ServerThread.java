@@ -27,7 +27,7 @@ import java.io.IOException;
 /**
  * represents the server thread
  * this thread is created for every accepted client connection
- * @author developer
+ * @author George Karpouzas
  */
 public class ServerThread extends Thread{
     private Server _server;
