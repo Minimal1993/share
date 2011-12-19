@@ -184,9 +184,7 @@ public class Client extends JFrame implements Runnable{
                 // get message
                 // -----------------------------------------------------------
                 message = this._input.readUTF();
-                if(message.startsWith("#"))
-                    this._area.append("#" + message + "\r\n");
-                else if(message.matches("#connect [0-9]{8,}:[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}") && 
+                if(message.matches("#connect [0-9]{8,}:[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}") && 
                     this._client==null){
                     
                     // -----------------------------------------------------------
@@ -199,7 +197,7 @@ public class Client extends JFrame implements Runnable{
                     this.connect2chatserver(host, port);
                 }
                 else
-                    this._area.append(":" + message + "\r\n");
+                    this._area.append(message + "\r\n");
                 
             } catch (Exception ex) {
                 System.exit(0);
@@ -268,11 +266,11 @@ public class Client extends JFrame implements Runnable{
         this._area.append("connecting to " + host + ", port " + port + "..\r\n");
         this._client = new PeerClient(host, port, this._area, this._text);
         if(this._client.connect()){
-            this._area.append("connected to " + host + ", port " + port + ".\r\n");
+            this._area.append("connected!\r\n");
             return true;
         }
         else{
-            this._area.append("Unable to connect to " + host + ", port " + port + ".\r\n");
+            this._area.append("Unable to connect.\r\n");
             return false;
         }
     }

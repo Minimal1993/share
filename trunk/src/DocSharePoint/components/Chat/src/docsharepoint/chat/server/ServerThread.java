@@ -83,8 +83,7 @@ public class ServerThread extends Thread{
                     // -----------------------------------------------------------
                     // tell the peer to which chat server should connect to
                     // -----------------------------------------------------------
-                    message = message.replace("#connect ", "");
-                    long id = Long.parseLong(message.split(":\\s*")[0]);
+                    long id = Long.parseLong(message.replace("#connect ", "").split(":\\s*")[0]);
                     this._server.sendmessage(message, this._server.getPeerByID(id));
                 }
                 else{
