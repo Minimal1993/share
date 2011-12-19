@@ -23,6 +23,7 @@ package docsharepoint.chat.client;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.net.ServerSocket;
 import java.net.Socket;
 
 /**
@@ -32,6 +33,7 @@ import java.net.Socket;
 public class Peer {
     private Socket _socket;
     private PeerServer _server;
+    private int _port;
     
     /**
      * constructor specifying socket
@@ -39,6 +41,8 @@ public class Peer {
      */
     public Peer(Socket client){
         this._socket = client;
+        this._port = 11888;
+        findport();
     }
     
     /**
@@ -54,7 +58,7 @@ public class Peer {
      * @return int
      */
     public int getListeningPort(){
-        return 11888;
+        return this._port;
     }
     
     /**
@@ -105,7 +109,20 @@ public class Peer {
      * start local peer chat server
      */
     public void startChatServer(){
-        this._server = new PeerServer(11888);
+        this._server = new PeerServer(this._port);
         this._server.start();
+    }
+    
+    private void findport(){
+        for(int i=this._port;i<65535;i++){
+            try {
+                ServerSocket server = new ServerSocket(i);
+                server.close();
+                this._port = i;
+                return;
+            } catch (IOException ex) {
+                continue;
+            }
+        }
     }
 }

@@ -22,6 +22,8 @@ package docsharepoint.chat.client;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -73,10 +75,19 @@ public class Client extends JFrame implements Runnable{
         this._area.setEditable(false);
         this._text = new JTextField();
         this._button = new JButton("Send");
+        this.getRootPane().setDefaultButton(this._button);
         
         this._panel.add(scroll);
         this._panel.add(this._text);
         this._panel.add(this._button);
+        
+        this.addWindowFocusListener(new WindowAdapter() {
+            @Override
+            public void windowGainedFocus(WindowEvent e) {
+                _text.requestFocusInWindow();
+            }
+        });
+
         
         scroll.setBounds(5, 5, 300, 200);
         this._text.setBounds(5, 210, 300, 20);
@@ -190,7 +201,9 @@ public class Client extends JFrame implements Runnable{
             // -----------------------------------------------------------
             if(message.startsWith("#"))
                 this._output.writeUTF(message);
-            
+            else if(message.matches("!connect [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}")){
+                this._area.append("connecting to " + message.replace("!connect ", ""));
+            }
             
             // -----------------------------------------------------------
             // clear text field
