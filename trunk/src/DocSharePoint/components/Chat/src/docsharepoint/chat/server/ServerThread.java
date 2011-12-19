@@ -70,8 +70,22 @@ public class ServerThread extends Thread{
                 
                 }
                 else if(message.matches("#info [0-9]{8,}")){
+                    
+                    // -----------------------------------------------------------
+                    //send peer info to client
+                    // -----------------------------------------------------------
                     long id = Long.parseLong(message.replace("#info ", ""));
                     this._server.sendmessage(this._server.getPeerInfo(id), this._clientsocket);
+                    
+                }
+                else if(message.matches("#connect [0-9]{8,}:[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}")){
+                    
+                    // -----------------------------------------------------------
+                    // tell the peer to which chat server should connect to
+                    // -----------------------------------------------------------
+                    message = message.replace("#connect ", "");
+                    long id = Long.parseLong(message.split(":\\s*")[0]);
+                    this._server.sendmessage(message, this._server.getPeerByID(id));
                 }
                 else{
                     

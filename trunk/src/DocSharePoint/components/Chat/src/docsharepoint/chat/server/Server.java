@@ -122,6 +122,16 @@ public class Server {
     }
     
     /**
+     * get detailed info about selected peer id
+     * @param peerid
+     * @return String
+     */
+    public Peer getPeerByID(long peerid){
+        if(!this._peers.containsKey(peerid)) return null;
+        return this._peers.get(peerid);
+    }
+    
+    /**
      * send message to client
      * @param message
      * @param client 
