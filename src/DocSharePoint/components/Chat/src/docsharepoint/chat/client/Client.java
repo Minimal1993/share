@@ -186,6 +186,18 @@ public class Client extends JFrame implements Runnable{
                 message = this._input.readUTF();
                 if(message.startsWith("#"))
                     this._area.append("#" + message + "\r\n");
+                else if(message.matches("#connect [0-9]{8,}:[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}") && 
+                    this._client==null){
+                    
+                    // -----------------------------------------------------------
+                    // get requested ip and port
+                    // -----------------------------------------------------------
+                    message = message.replace("#connect ", "");
+                    String host = message.split(":\\s*")[1];
+                    int port = Integer.parseInt(message.split(":\\s*")[2]);
+                
+                    this.connect2chatserver(host, port);
+                }
                 else
                     this._area.append(":" + message + "\r\n");
                 
@@ -201,28 +213,32 @@ public class Client extends JFrame implements Runnable{
             // send message to the server only if message is prefixed with #
             // -----------------------------------------------------------
             if(message.startsWith("#"))
+                
+                // -----------------------------------------------------------
+                //send message to decentralized server
+                // -----------------------------------------------------------
                 this._output.writeUTF(message);
-            else if(message.matches("!connect [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}") && 
+            else if(message.matches("!connect [0-9]{8,}:[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}") && 
                     this._client==null){
                 
                 // -----------------------------------------------------------
                 // get requested ip and port
                 // -----------------------------------------------------------
                 message = message.replace("!connect ", "");
-                String host = message.split(":\\s*")[0];
-                int port = Integer.parseInt(message.split(":\\s*")[1]);
+                long id = Long.parseLong(message.split(":\\s*")[0]);
+                String host = message.split(":\\s*")[1];
+                int port = Integer.parseInt(message.split(":\\s*")[2]);
+        
+                if(this.connect2chatserver(host, port)){
+                    
+                    // -----------------------------------------------------------
+                    // request from server to inform the other peer (chat server)
+                    // for the connection and force it to connect its client to the
+                    // server too in order to chat.
+                    // -----------------------------------------------------------
+                    this._output.writeUTF("#connect "+id+":"+host+":"+port);
                 
-                this._area.append("connecting to " + message.replace("!connect ", "") + "..\r\n");
-                
-                // -----------------------------------------------------------
-                //connect to peer's chat server
-                // -----------------------------------------------------------
-                this._client = new PeerClient(host, port, this._area, this._text);
-                if(this._client.connect()){
-                    this._area.append("connected to " + host + ", port " + port + ".\r\n");            
                 }
-                else
-                    this._area.append("Unable to connect to " + host + ", port " + port + ".\r\n");
             }
             else if(message.compareTo("!disconnect")==0){
                 this._client.disconnect();
@@ -232,6 +248,8 @@ public class Client extends JFrame implements Runnable{
                 if(this._client!=null) 
                     this._client.sendMessage(message);
             }
+            
+            
             // -----------------------------------------------------------
             // clear text field
             // -----------------------------------------------------------
@@ -239,6 +257,23 @@ public class Client extends JFrame implements Runnable{
             
         } catch (IOException ex) {
             System.err.println("Error: Sending message to the server.");
+        }
+    }
+    
+    private boolean connect2chatserver(String host, int port){
+
+        // -----------------------------------------------------------
+        //connect to peer's chat server
+        // -----------------------------------------------------------
+        this._area.append("connecting to " + host + ", port " + port + "..\r\n");
+        this._client = new PeerClient(host, port, this._area, this._text);
+        if(this._client.connect()){
+            this._area.append("connected to " + host + ", port " + port + ".\r\n");
+            return true;
+        }
+        else{
+            this._area.append("Unable to connect to " + host + ", port " + port + ".\r\n");
+            return false;
         }
     }
 }
