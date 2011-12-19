@@ -54,6 +54,8 @@ public class Client extends JFrame implements Runnable{
     private JTextField _text;
     private JButton _button;
     
+    private PeerClient _client;
+    
     /**
      * constructor providing server-host and server listening port
      * @param host
@@ -115,6 +117,7 @@ public class Client extends JFrame implements Runnable{
         // -----------------------------------------------------------
         this._host = host;
         this._port = port;
+        this._client = null;
     }
     
     /**
@@ -133,7 +136,6 @@ public class Client extends JFrame implements Runnable{
             // create a local peer
             // -----------------------------------------------------------
             this._peer = new Peer(this._socket);
-            
             
             System.out.println("Connected to server.");
             
@@ -195,16 +197,41 @@ public class Client extends JFrame implements Runnable{
     
     private void sendMessage(String message){
         try {
-            
             // -----------------------------------------------------------
             // send message to the server only if message is prefixed with #
             // -----------------------------------------------------------
             if(message.startsWith("#"))
                 this._output.writeUTF(message);
-            else if(message.matches("!connect [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}")){
-                this._area.append("connecting to " + message.replace("!connect ", ""));
+            else if(message.matches("!connect [0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}:[0-9]{1,5}") && 
+                    this._client==null){
+                
+                // -----------------------------------------------------------
+                // get requested ip and port
+                // -----------------------------------------------------------
+                message = message.replace("!connect ", "");
+                String host = message.split(":\\s*")[0];
+                int port = Integer.parseInt(message.split(":\\s*")[1]);
+                
+                this._area.append("connecting to " + message.replace("!connect ", "") + "..\r\n");
+                
+                // -----------------------------------------------------------
+                //connect to peer's chat server
+                // -----------------------------------------------------------
+                this._client = new PeerClient(host, port, this._area, this._text);
+                if(this._client.connect()){
+                    this._area.append("connected to " + host + ", port " + port + ".\r\n");            
+                }
+                else
+                    this._area.append("Unable to connect to " + host + ", port " + port + ".\r\n");
             }
-            
+            else if(message.compareTo("!disconnect")==0){
+                this._client.disconnect();
+                this._client = null;
+            }
+            else{
+                if(this._client!=null) 
+                    this._client.sendMessage(message);
+            }
             // -----------------------------------------------------------
             // clear text field
             // -----------------------------------------------------------
