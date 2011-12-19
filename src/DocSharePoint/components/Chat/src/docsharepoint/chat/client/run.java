@@ -27,7 +27,7 @@ package docsharepoint.chat.client;
 public class run {
     /**
      * main method
-     * @param args 
+     * @param args
      */
     public static void main(String args[]){
         Client peer = new Client("localhost", 11880);
