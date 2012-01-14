@@ -1,7 +1,7 @@
 /*
  *  DocSharePoint
  *  Open Source Distributed p2p system based on pastry
- *  Copyright (C) 2010-2011 DocSharePoint KARPOUZAS GEORGE
+ *  Copyright (C) 2010-2012 DocSharePoint KARPOUZAS GEORGE
  *
  *  http://docsharepoint.sourceforge.net/
  *
