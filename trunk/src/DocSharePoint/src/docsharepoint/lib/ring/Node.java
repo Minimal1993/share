@@ -116,11 +116,6 @@ public class Node implements Comparable{
     private String _generateID(){
         return SHA1Helper.getInstance().hash(this._ip + ":" + this._port);
     }
-    
-    public static void main(String args[]){
-        Node n = new Node();
-        System.out.println(n.getID());
-    }
 
     /**
      * compare nodes by comparing their ids
