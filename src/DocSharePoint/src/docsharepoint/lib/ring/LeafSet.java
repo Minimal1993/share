@@ -22,6 +22,8 @@ package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Iterator;
 
 /**
  * represents node's leaf set
@@ -48,10 +50,15 @@ public class LeafSet {
     public void add(Node n){
         if(n.compareTo(this._owner)==0) return;
         if(n.compareTo(this._owner)<0 && this._smaller.size() < 
-                AppConfig.getInstance().getL()/2) this._smaller.add(n);
+                AppConfig.getInstance().getL()/2) {
+            this._smaller.add(n);
+            Collections.sort(this._smaller);
+        }
         else{
-            if(this._bigger.size() < AppConfig.getInstance().getL()/2)
+            if(this._bigger.size() < AppConfig.getInstance().getL()/2){
                 this._bigger.add(n);
+                Collections.sort(this._bigger);
+            }
         }
     }
     
@@ -62,5 +69,36 @@ public class LeafSet {
     public void remove(Node n){
         this._smaller.remove(n);
         this._bigger.remove(n);
+    }
+    
+    /**
+     * search for give nodeid
+     * @param nodeid
+     * @return 
+     */
+    public Node search(String nodeid){
+        Node found = null;
+        if(nodeid.compareTo(this._owner.getID())==0)return this._owner;
+        if(nodeid.compareTo(this._owner.getID())<0){
+            Iterator<Node> iter = this._smaller.iterator();
+            while(iter.hasNext()){
+                Node item = iter.next();
+                if(item.getID().compareTo(nodeid)==0){
+                    found = item;
+                    break;
+                }
+            }
+        }
+        else{
+            Iterator<Node> iter = this._bigger.iterator();
+            while(iter.hasNext()){
+                Node item = iter.next();
+                if(item.getID().compareTo(nodeid)==0){
+                    found = item;
+                    break;
+                }
+            }
+        }
+        return found;
     }
 }

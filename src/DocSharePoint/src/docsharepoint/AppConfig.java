@@ -58,9 +58,15 @@ public final class AppConfig {
      * print to console or not?
      */
     private static boolean _print2Console;
-    
-    private static int L = 16;
-    /**.
+    /**
+     * number of leaf set nodes
+     */
+    private static int L = 8;
+    /**
+     * number of neighborhood set nodes
+     */
+    private static int M = 8;
+    /**
      * private constructor
      */
     private AppConfig() {
@@ -90,10 +96,18 @@ public final class AppConfig {
 
     /**
      * leaf set size - L in L/2
-     * @return 
+     * @return int
      */
     public int getL(){
         return L;
+    }
+    
+    /**
+     * neighborhood set size - M
+     * @return int
+     */
+    public int getM(){
+        return M;
     }
     
     /**.

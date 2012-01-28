@@ -34,9 +34,9 @@ public class Node implements Comparable{
     private String _nodeID;
     private String _ip;
     private int _port;
-    private LeafSet L;
-    private RoutingTable R;
-    private NeighborhoodSet M;
+    public LeafSet L;
+    public RoutingTable R;
+    public NeighborhoodSet M;
     
     /**
      * default constructor listening on port 9090
@@ -129,5 +129,9 @@ public class Node implements Comparable{
      */
     public int compareTo(Object t) {
         return ((Node) t).getID().compareTo(this._nodeID);
+    }
+    
+    public int distance(Node n){
+        return -1;
     }
 }
