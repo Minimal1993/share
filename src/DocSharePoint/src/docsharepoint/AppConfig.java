@@ -67,6 +67,10 @@ public final class AppConfig {
      */
     private static int M = 8;
     /**
+     * 2^b-1  2^b
+     */
+    private static int b = 3;
+    /**
      * private constructor
      */
     private AppConfig() {
@@ -110,6 +114,12 @@ public final class AppConfig {
         return M;
     }
     
+    /**
+     * 2^b-1  2^b
+     */
+    public int getB(){
+        return b;
+    }
     /**.
      * get application version
      * @return String
