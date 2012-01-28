@@ -21,10 +21,15 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.lib.helpers.SHA1Helper;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.StringWriter;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 
 /**
  * represents a ring node
@@ -126,7 +131,50 @@ public class Node implements Comparable{
         return ((Node) t).getID().compareTo(this._nodeID);
     }
     
+    /**
+     * calculate distance between nodes
+     * @param n
+     * @return int hops
+     */
     public int distance(Node n){
-        return -1;
+        try {
+            String[] cmd = {
+            "/bin/sh",
+            "-c",
+            "traceroute 192.168.1.10 | tail -1"
+            };
+            Process proc = Runtime.getRuntime().exec(cmd);
+            InputStream in = proc.getInputStream();
+            StringWriter writer = new StringWriter();
+            int c;
+            while((c = in.read()) > 0) {
+                writer.write(c);
+            }
+            writer.flush();
+            return Integer.parseInt(writer.toString().trim().split(" ")[0]);
+        } catch (IOException ex) {
+            return -1;
+        }
+    }
+    
+    public static void main(String args[]){
+        try {
+            String[] cmd = {
+            "/bin/sh",
+            "-c",
+            "traceroute 192.168.1.10 | tail -1"
+            };
+            Process proc = Runtime.getRuntime().exec(cmd);
+            InputStream in = proc.getInputStream();
+            StringWriter writer = new StringWriter();
+            int c;
+            while((c = in.read()) > 0) {
+                writer.write(c);
+            }
+            writer.flush();
+            System.out.println(writer.toString().trim().split(" ")[0]);
+        } catch (IOException ex) {
+            System.err.println(ex.getMessage());
+        }
     }
 }
