@@ -50,23 +50,23 @@ public class ServerConnectEvent implements ClickEvent {
             if(!cp.getBootHost().isEmpty() &&
                    cp.getBootPort()!=-1 &&
                    cp.getBindPort()!=-1){
-                AppConfig.getInstance().getPastryApp().init(10,
+                /*AppConfig.getInstance().getPastryApp().init(10,
                         cp.useDirectConnection(),
                         cp.getLogLevel(),
                         cp.getFirewallPolicy(),
                         cp.getNATPolicy(),
                         cp.getPingDelay(),
                         cp.probe4ExternalAddress(),
-                        cp.getPath());
-                boolean connected = 
-                        AppConfig.getInstance().getPastryApp().connect(cp.getBootHost(),
-                        cp.getBootPort(), cp.getBindPort());
-                AppConfig.getInstance().setConnected(connected);
-                if(connected)but.setText("Disconnect");
+                        cp.getPath());*/
+                //boolean connected = 
+                        //AppConfig.getInstance().getPastryApp().connect(cp.getBootHost(),
+                        //cp.getBootPort(), cp.getBindPort());
+                //AppConfig.getInstance().setConnected(connected);
+                //if(connected)but.setText("Disconnect");
             }
         }
         else{
-            AppConfig.getInstance().getPastryApp().disconnect();
+            //AppConfig.getInstance().getPastryApp().disconnect();
             AppConfig.getInstance().setConnected(false);
             but.setText("Connect");
         }

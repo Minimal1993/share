@@ -25,7 +25,6 @@ import docsharepoint.AppConfig;
 import docsharepoint.lib.Messaging;
 import docsharepoint.ui.panels.SearchPanel;
 import java.awt.event.ActionEvent;
-import rice.p2p.commonapi.Id;
 
 /**.
  * represents the search file click event
@@ -47,17 +46,17 @@ public class SearchFileEvent implements ClickEvent {
      * @param e action event
      */
     public final void actionPerformed(final ActionEvent e) {
-        if(AppConfig.getInstance().isConnected()){
-            Id val = AppConfig.getInstance().getPastryApp().getKey(_panel.getFileName());
-            if(val!=null){
-                AppConfig.getInstance().getPastryApp().search(
-                    val,
-                    _panel.getPath());
-                Messaging.ShowMessage("File has been downloaded succesfully", "Download File");
-            }
-            else Messaging.ShowMessage("File has not been found", "Download File");
+        /*if(AppConfig.getInstance().isConnected()){
+            int val = AppConfig.getInstance().getPastryApp().getKey(_panel.getFileName());
+            //if(val!=null){
+                //AppConfig.getInstance().getPastryApp().search(
+                    //val,
+                    //_panel.getPath());
+                //Messaging.ShowMessage("File has been downloaded succesfully", "Download File");
+            //}
+            //else Messaging.ShowMessage("File has not been found", "Download File");
         }
         else
-            Messaging.Print2Console("Not connected to Pastry Network");
+            Messaging.Print2Console("Not connected to Pastry Network");*/
     }
 }

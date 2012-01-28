@@ -23,7 +23,6 @@ package docsharepoint.app;
 
 import docsharepoint.AppConfig;
 import docsharepoint.app.Exceptions.ApplicationStartupException;
-import docsharepoint.app.arch.IDocSharePointApp;
 import docsharepoint.system.Monitor;
 import docsharepoint.ui.Exceptions.PositionInvalidException;
 import docsharepoint.ui.Exceptions.SizeInvalidException;
@@ -38,7 +37,7 @@ import docsharepoint.ui.windows.MainWindow;
  *
  * @author George Karpouzas <gkarpouzas@webnetsoft.gr>
  */
-public class DocSharePointApp implements IDocSharePointApp {
+public class DocSharePointApp{
 
     /**.
      * start application
