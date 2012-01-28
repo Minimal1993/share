@@ -156,25 +156,4 @@ public class Node implements Comparable{
             return -1;
         }
     }
-    
-    public static void main(String args[]){
-        try {
-            String[] cmd = {
-            "/bin/sh",
-            "-c",
-            "traceroute 192.168.1.10 | tail -1"
-            };
-            Process proc = Runtime.getRuntime().exec(cmd);
-            InputStream in = proc.getInputStream();
-            StringWriter writer = new StringWriter();
-            int c;
-            while((c = in.read()) > 0) {
-                writer.write(c);
-            }
-            writer.flush();
-            System.out.println(writer.toString().trim().split(" ")[0]);
-        } catch (IOException ex) {
-            System.err.println(ex.getMessage());
-        }
-    }
 }
