@@ -25,7 +25,6 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.UUID;
 
 /**
  * represents a ring node
@@ -104,13 +103,11 @@ public class Node {
     }
     
     private String _generateID(){
-        return SHA1Helper.getInstance().hash(
-                String.valueOf(UUID.randomUUID()) + 
-                this._ip + ":" + this._port);
+        return SHA1Helper.getInstance().hash(this._ip + ":" + this._port);
     }
     
     public static void main(String args[]){
         Node n = new Node();
-        System.out.println(n.getIP());
+        System.out.println(n.getID());
     }
 }
