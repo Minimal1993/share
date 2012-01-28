@@ -18,29 +18,35 @@
  *  You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package docsharepoint.lib.ring;
 
-package docsharepoint.lib.files;
+import java.util.UUID;
 
 /**
- * represents a file to be stored in pastry network
- * @author George Karpouzas
+ * represents a ring node
+ * @author Karpouzas George
  */
-public class PastFile {
-    private String _contents;
-
-    /**
-     * constructor specifying file contents
-     * @param contents
-     */
-    public PastFile(String contents){
-        _contents = contents;
+public class Node {
+    private String _nodeID;
+    
+    public Node(){
+        this._nodeID = this.generateID();
     }
-
+    
     /**
-     * get file contents
+     * get node id
      * @return String
      */
-    public String getContents(){
-        return _contents;
+    public String getID(){
+        return this._nodeID;
+    }
+    
+    private String generateID(){
+        return String.valueOf(UUID.randomUUID());
+    }
+    
+    public static void main(String args[]){
+        Node n = new Node();
+        System.out.println(n.getID());
     }
 }

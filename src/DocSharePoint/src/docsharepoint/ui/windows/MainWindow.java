@@ -22,7 +22,7 @@
 package docsharepoint.ui.windows;
 
 import docsharepoint.AppConfig;
-import docsharepoint.lib.Messaging;
+import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.system.Monitor;
 import docsharepoint.ui.Exceptions.WindowInitializationException;
 import docsharepoint.ui.events.AboutMenuEvent;
@@ -91,7 +91,7 @@ public class MainWindow extends AbstractWindow {
             initialize(size);
             return true;
         }
-        catch(Exception ex){ Messaging.PrintError2Console(ex.toString()); return false; }
+        catch(Exception ex){ MessagingHelper.PrintError2Console(ex.toString()); return false; }
     }
 
     /**.
