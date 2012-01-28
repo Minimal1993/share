@@ -29,7 +29,7 @@ import java.util.Iterator;
  * represents node's leaf set
  * @author Karpouzas George
  */
-public class LeafSet {
+public class LeafSet implements iSet{
     private ArrayList<Node> _smaller, _bigger;
     private Node _owner;
     

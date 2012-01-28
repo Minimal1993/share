@@ -29,7 +29,7 @@ import java.util.Iterator;
  * represents node's neighborhood
  * @author Karpouzas George
  */
-public class NeighborhoodSet {
+public class NeighborhoodSet implements iSet{
     private ArrayList<Node> _list;
     
     /**
