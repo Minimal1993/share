@@ -22,7 +22,6 @@
 package docsharepoint;
 
 import docsharepoint.app.DocSharePointApp;
-import docsharepoint.lib.pastry.past.dspPastManager;
 import docsharepoint.ui.dialogs.ReportDialog;
 import docsharepoint.ui.windows.MainWindow;
 
@@ -34,35 +33,31 @@ public final class AppConfig {
     /**
      * application instance
      */
-    private static AppConfig instance;
+    private static AppConfig _instance;
     /**
      * application version
      */
-    private static String version;
+    private static String _version;
     /**
      *
      */
-    private static boolean connected;
+    private static boolean _connected;
     /**
      * dsp application
      */
-    private static DocSharePointApp dspApplication;
+    private static DocSharePointApp _dspApplication;
     /**.
      * main window handle
      */
-    private static MainWindow mw;
+    private static MainWindow _mw;
     /**
      * report dialog
      */
-    private static ReportDialog reportArea;
+    private static ReportDialog _reportArea;
     /*
      * print to console or not?
      */
-    private static boolean print2Console;
-    /**
-     * socketapp manager
-     */
-    private static dspPastManager manager;
+    private static boolean _print2Console;
     
     /**.
      * private constructor
@@ -75,11 +70,10 @@ public final class AppConfig {
      * init variables
      */
      private void initGlobals() {
-         version = "0.7.30.15a";
-         connected = false;
-         dspApplication = new DocSharePointApp();
-         print2Console = false;
-         manager = new dspPastManager();
+         _version = "0.8a";
+         _connected = false;
+         _dspApplication = new DocSharePointApp();
+         _print2Console = false;
      }
 
     /**.
@@ -87,62 +81,57 @@ public final class AppConfig {
      * @return APP_CONFIG
      */
     public static AppConfig getInstance() {
-        if (instance == null) {
-            instance = new AppConfig();
+        if (_instance == null) {
+            _instance = new AppConfig();
         }
-        return instance;
+        return _instance;
     }
 
     /**.
      * get application version
      * @return String
      */
-    public String getVersion() { return version; }
+    public String getVersion() { return _version; }
     /**.
      * check if application is connected with p2p network
      * @return boolean, true if connected
      */
-    public boolean isConnected() { return connected; }
+    public boolean isConnected() { return _connected; }
     /**.
      * set connected
      * @param value connected or not?
      */
-    public void setConnected(final boolean value) { connected = value; }
+    public void setConnected(final boolean value) { _connected = value; }
     /**.
      * get application handler
      * @return DocSharePointApp
      */
-    public DocSharePointApp getApplication() { return dspApplication; }
+    public DocSharePointApp getApplication() { return _dspApplication; }
     /**.
      * get main window handle
      * @return MainWindow
      */
-    public MainWindow getMainWindow() { return mw; }
+    public MainWindow getMainWindow() { return _mw; }
     /**
      * set main window
      * @param main
      */
-    public void setMainWindow(MainWindow main) { mw = main; }
+    public void setMainWindow(MainWindow main) { _mw = main; }
 
     /**
      * get handle to report dialog
      * @return ReportDialog
      */
-    public ReportDialog getReportDialog() { return reportArea; }
+    public ReportDialog getReportDialog() { return _reportArea; }
 
     /**
      * set report dialog
      * @param rd
      */
-    public void setReportDialog(ReportDialog rd) { reportArea = rd; }
+    public void setReportDialog(ReportDialog rd) { _reportArea = rd; }
     /**
      * get status for printing to console
      * @return boolean
      */
-    public boolean print2Console(){ return print2Console; }
-    /**
-     * get reference to pastry application manager
-     * @return dspSocketAppManager
-     */
-    public dspPastManager getPastryApp(){ return manager; }
+    public boolean print2Console(){ return _print2Console; }
 }

@@ -23,6 +23,7 @@ package docsharepoint.ui.components;
 
 import docsharepoint.ui.arch.IComponent;
 import docsharepoint.ui.events.ClickEvent;
+import java.awt.event.ActionListener;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.SwingConstants;
@@ -41,6 +42,19 @@ public class Button extends JButton implements IComponent {
      */
     public Button(final String title,
             final String tooltip, final ClickEvent clickevent) {
+        super(title);
+        setToolTipText(tooltip);
+        addActionListener(clickevent);
+    }
+    
+    /**.
+     * constructor specifying title, tooltip and click event
+     * @param title component title
+     * @param tooltip component tooltip text
+     * @param ActionListener action
+     */
+    public Button(final String title,
+            final String tooltip, ActionListener clickevent) {
         super(title);
         setToolTipText(tooltip);
         addActionListener(clickevent);

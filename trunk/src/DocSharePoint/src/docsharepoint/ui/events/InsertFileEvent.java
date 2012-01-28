@@ -26,7 +26,6 @@ import docsharepoint.lib.Messaging;
 import docsharepoint.ui.panels.SharedPanel;
 import java.awt.event.ActionEvent;
 import java.io.File;
-import rice.p2p.commonapi.Id;
 
 /**.
  * represents the insert file click event
@@ -34,7 +33,7 @@ import rice.p2p.commonapi.Id;
  */
 public class InsertFileEvent implements ClickEvent {
     private SharedPanel _panel;
-    private Id fileKey;
+    private int fileKey;
     
     /**
      * constructor specifying shared panel
@@ -49,17 +48,17 @@ public class InsertFileEvent implements ClickEvent {
      * @param e action event
      */
     public final void actionPerformed(final ActionEvent e) {
-        if(AppConfig.getInstance().isConnected()){
+        /*if(AppConfig.getInstance().isConnected()){
             fileKey = AppConfig.getInstance().getPastryApp().insert(
                 _panel.getFileNameIdentifier(),
                 _panel.getNumOfReplications(),
                 new File(_panel.getFilePath()));
-            if(fileKey!=null)
-                Messaging.ShowMessage("File has been uploaded succesfully", "Upload File");
-            else
-                Messaging.ShowErrorMessage("File hasn't been uploaded.", "Upload File");
+            //if(fileKey!=null)
+                //Messaging.ShowMessage("File has been uploaded succesfully", "Upload File");
+            //else
+                //Messaging.ShowErrorMessage("File hasn't been uploaded.", "Upload File");
         }
         else
-            Messaging.Print2Console("Not connected to Pastry Network");
+            Messaging.Print2Console("Not connected to Pastry Network");*/
     }
 }
