@@ -141,7 +141,7 @@ public class Node implements Comparable{
             String[] cmd = {
             "/bin/sh",
             "-c",
-            "traceroute 192.168.1.10 | tail -1"
+            "traceroute " + n.getIP() + " | tail -1"
             };
             Process proc = Runtime.getRuntime().exec(cmd);
             InputStream in = proc.getInputStream();
