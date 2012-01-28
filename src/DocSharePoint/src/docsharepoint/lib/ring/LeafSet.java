@@ -20,10 +20,47 @@
  */
 package docsharepoint.lib.ring;
 
+import docsharepoint.AppConfig;
+import java.util.ArrayList;
+
 /**
  * represents node's leaf set
  * @author Karpouzas George
  */
 public class LeafSet {
+    private ArrayList<Node> _smaller, _bigger;
+    private Node _owner;
     
+    /**
+     * constructor specifying main leafset node
+     * @param main 
+     */
+    public LeafSet(Node main){
+        this._smaller = new ArrayList<Node>();
+        this._bigger = new ArrayList<Node>();
+        this._owner = main;
+    }
+    
+    /**
+     * add new node
+     * @param n 
+     */
+    public void add(Node n){
+        if(n.compareTo(this._owner)==0) return;
+        if(n.compareTo(this._owner)<0 && this._smaller.size() < 
+                AppConfig.getInstance().getL()/2) this._smaller.add(n);
+        else{
+            if(this._bigger.size() < AppConfig.getInstance().getL()/2)
+                this._bigger.add(n);
+        }
+    }
+    
+    /**
+     * remove a node
+     * @param n 
+     */
+    public void remove(Node n){
+        this._smaller.remove(n);
+        this._bigger.remove(n);
+    }
 }

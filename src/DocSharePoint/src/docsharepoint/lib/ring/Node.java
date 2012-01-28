@@ -30,10 +30,13 @@ import java.util.Enumeration;
  * represents a ring node
  * @author Karpouzas George
  */
-public class Node {
+public class Node implements Comparable{
     private String _nodeID;
     private String _ip;
     private int _port;
+    private LeafSet L;
+    private RoutingTable R;
+    private NeighborhoodSet M;
     
     /**
      * default constructor listening on port 9090
@@ -42,6 +45,10 @@ public class Node {
         this._nodeID = this._generateID();
         this._ip = this._getipaddress();
         this._port = 9090;
+
+        this.L = new LeafSet(this);
+        this.R = new RoutingTable();
+        this.M = new NeighborhoodSet();
     }
     
     /**
@@ -52,6 +59,10 @@ public class Node {
         this._nodeID = this._generateID();
         this._ip = this._getipaddress();
         this._port = port;
+
+        this.L = new LeafSet(this);
+        this.R = new RoutingTable();
+        this.M = new NeighborhoodSet();
     }
     
     /**
@@ -109,5 +120,14 @@ public class Node {
     public static void main(String args[]){
         Node n = new Node();
         System.out.println(n.getID());
+    }
+
+    /**
+     * compare nodes by comparing their ids
+     * @param t
+     * @return int
+     */
+    public int compareTo(Object t) {
+        return ((Node) t).getID().compareTo(this._nodeID);
     }
 }

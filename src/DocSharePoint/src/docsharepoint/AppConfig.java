@@ -39,7 +39,7 @@ public final class AppConfig {
      */
     private static String _version;
     /**
-     *
+     * connection status
      */
     private static boolean _connected;
     /**
@@ -59,6 +59,7 @@ public final class AppConfig {
      */
     private static boolean _print2Console;
     
+    private static int L = 16;
     /**.
      * private constructor
      */
@@ -87,6 +88,14 @@ public final class AppConfig {
         return _instance;
     }
 
+    /**
+     * leaf set size - L in L/2
+     * @return 
+     */
+    public int getL(){
+        return L;
+    }
+    
     /**.
      * get application version
      * @return String
