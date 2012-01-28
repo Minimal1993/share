@@ -20,6 +20,11 @@
  */
 package docsharepoint.lib.ring;
 
+import docsharepoint.lib.helpers.SHA1Helper;
+import java.net.InetAddress;
+import java.net.NetworkInterface;
+import java.net.SocketException;
+import java.util.Enumeration;
 import java.util.UUID;
 
 /**
@@ -28,9 +33,26 @@ import java.util.UUID;
  */
 public class Node {
     private String _nodeID;
+    private String _ip;
+    private int _port;
     
+    /**
+     * default constructor listening on port 9090
+     */
     public Node(){
-        this._nodeID = this.generateID();
+        this._nodeID = this._generateID();
+        this._ip = this._getipaddress();
+        this._port = 9090;
+    }
+    
+    /**
+     * constructor specifying port
+     * @param port 
+     */
+    public Node(int port){
+        this._nodeID = this._generateID();
+        this._ip = this._getipaddress();
+        this._port = port;
     }
     
     /**
@@ -41,12 +63,54 @@ public class Node {
         return this._nodeID;
     }
     
-    private String generateID(){
-        return String.valueOf(UUID.randomUUID());
+    /**
+     * get node ip
+     * @return String
+     */
+    public String getIP(){
+        return this._ip;
+    }
+    
+    /**
+     * get node port
+     * @return int
+     */
+    public int getPort(){
+        return this._port;
+    }
+    
+    private String _getipaddress(){
+        String ipaddress = "0.0.0.0";
+        try {
+            for (Enumeration<NetworkInterface> eni = 
+                NetworkInterface.getNetworkInterfaces();
+                eni.hasMoreElements(); )
+                {
+                    NetworkInterface ni = eni.nextElement();
+                    if(ni.getName().contains("eth")){
+                        for (Enumeration<InetAddress> addresses =
+                           ni.getInetAddresses();
+                         addresses.hasMoreElements(); )
+                        {
+                            InetAddress address = addresses.nextElement();
+                            ipaddress = address.toString().replace("/", "");
+                        }
+                    }
+                }
+            return ipaddress;
+        } catch (SocketException ex) {
+            return ipaddress;
+        }
+    }
+    
+    private String _generateID(){
+        return SHA1Helper.getInstance().hash(
+                String.valueOf(UUID.randomUUID()) + 
+                this._ip + ":" + this._port);
     }
     
     public static void main(String args[]){
         Node n = new Node();
-        System.out.println(n.getID());
+        System.out.println(n.getIP());
     }
 }
