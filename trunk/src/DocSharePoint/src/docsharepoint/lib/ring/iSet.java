@@ -20,49 +20,12 @@
  */
 package docsharepoint.lib.ring;
 
-import docsharepoint.AppConfig;
-
 /**
- * represents node's routing table
+ * interface all sets must implement
  * @author Karpouzas George
  */
-public class RoutingTable implements iSet{
-    private Node[][] _rtable;
-    /**
-     * default constructor
-     */
-    public RoutingTable(){
-        AppConfig.getInstance().getN();
-        //rows = log(N)/log(2^b)
-        int rows = (int) (Math.log(AppConfig.getInstance().getN())/Math.log(4));
-        //cols = 2^b-1
-        int cols = (int) (Math.pow(2, AppConfig.getInstance().getB()) - 1);
-        this._rtable = new Node[rows][cols];
-    }
-    
-    /**
-     * add node
-     * @param n 
-     */
-    public void add(Node n){
-        
-    }
-    
-    /**
-     * remove node
-     * @param n 
-     */
-    public void remove(Node n){
-        
-    }
-    
-    /**
-     * search for a nodeid
-     * @param nodeid
-     * @return 
-     */
-    public Node search(String nodeid){
-        Node found = null;
-        return found;
-    }
+public interface iSet {
+    public void add(Node n);
+    public void remove(Node n);
+    public Node search(String nodeid);
 }
