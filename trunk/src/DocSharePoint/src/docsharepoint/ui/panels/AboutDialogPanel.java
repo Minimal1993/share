@@ -70,7 +70,7 @@ public class AboutDialogPanel extends AbstractPanel {
         add(product);
         product.setBounds(10, 10, 180, 20);
 
-        copyright = new Label("Copyright (c) 2011 Karpouzas George");
+        copyright = new Label("Copyright (c) 2010-2012 Karpouzas George");
         add(copyright);
         copyright.setBounds(10, 30, 280, 20);
 

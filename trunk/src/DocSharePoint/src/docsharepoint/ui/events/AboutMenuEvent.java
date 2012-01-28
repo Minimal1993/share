@@ -21,7 +21,7 @@
 
 package docsharepoint.ui.events;
 
-import docsharepoint.lib.Messaging;
+import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.ui.Exceptions.SizeInvalidException;
 import docsharepoint.ui.Exceptions.WindowInitializationException;
 import docsharepoint.ui.dialogs.AboutDialog;
@@ -51,10 +51,10 @@ public class AboutMenuEvent implements ClickEvent {
                 about.show();
             }
         } catch (SizeInvalidException pie) {
-            Messaging.PrintError2Console(pie.toString());
+            MessagingHelper.PrintError2Console(pie.toString());
             System.exit(1);
         } catch (WindowInitializationException wie) {
-            Messaging.PrintError2Console(wie.toString());
+            MessagingHelper.PrintError2Console(wie.toString());
             System.exit(1);
         }
     }

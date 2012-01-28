@@ -22,7 +22,7 @@
 package docsharepoint.ui.events;
 
 import docsharepoint.AppConfig;
-import docsharepoint.lib.Messaging;
+import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.ui.panels.SearchPanel;
 import java.awt.event.ActionEvent;
 

@@ -19,7 +19,7 @@
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
 
-package docsharepoint.lib;
+package docsharepoint.lib.helpers;
 
 import docsharepoint.AppConfig;
 import javax.swing.JOptionPane;
@@ -32,7 +32,7 @@ import javax.swing.JOptionPane;
  * etc..
  * @author George Karpouzas
  */
-public class Messaging {
+public class MessagingHelper {
     
     /**
      * print to command line - console

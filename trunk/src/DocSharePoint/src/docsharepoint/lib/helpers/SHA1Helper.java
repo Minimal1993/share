@@ -18,29 +18,12 @@
  *  You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package docsharepoint.lib.files;
+package docsharepoint.lib.helpers;
 
 /**
- * represents a file to be stored in pastry network
- * @author George Karpouzas
+ * sha1 class helper
+ * @author Karpouzas George
  */
-public class PastFile {
-    private String _contents;
-
-    /**
-     * constructor specifying file contents
-     * @param contents
-     */
-    public PastFile(String contents){
-        _contents = contents;
-    }
-
-    /**
-     * get file contents
-     * @return String
-     */
-    public String getContents(){
-        return _contents;
-    }
+public class SHA1Helper {
+    private static SHA1Helper _instance;
 }

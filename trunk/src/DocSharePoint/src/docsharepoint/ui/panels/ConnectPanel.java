@@ -22,7 +22,7 @@
 package docsharepoint.ui.panels;
 
 import docsharepoint.AppConfig;
-import docsharepoint.lib.Messaging;
+import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.ui.components.Button;
 import docsharepoint.ui.components.CheckBox;
 import docsharepoint.ui.components.ComboBox;
@@ -167,10 +167,10 @@ public class ConnectPanel extends AbstractPanel {
                 "dsp"+System.getProperty("file.separator"));
         try{
             boolean success = (new File(path2save.getText())).mkdirs();
-            if(success) Messaging.Print2Console(path2save.getText()+" succesfully created.");
+            if(success) MessagingHelper.Print2Console(path2save.getText()+" succesfully created.");
         }
         catch(Exception ex){
-            Messaging.PrintError2Console(ex.toString());
+            MessagingHelper.PrintError2Console(ex.toString());
         }
         add(path2save);
         path2save.setBounds(second_column_comp_y, 250, text_fields_width, 20);

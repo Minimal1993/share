@@ -21,7 +21,7 @@
 
 package docsharepoint.ui.panels;
 
-import docsharepoint.lib.Messaging;
+import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.ui.components.Button;
 import docsharepoint.ui.components.Label;
 import docsharepoint.ui.components.TextField;
@@ -72,10 +72,10 @@ public class SearchPanel extends AbstractPanel {
                 System.getProperty("file.separator"));
         try{
             boolean success = (new File(folder.getText())).mkdirs();
-            if(success) Messaging.Print2Console(folder.getText()+" succesfully created.");
+            if(success) MessagingHelper.Print2Console(folder.getText()+" succesfully created.");
         }
         catch(Exception ex){
-            Messaging.PrintError2Console(ex.toString());
+            MessagingHelper.PrintError2Console(ex.toString());
         }
         add(folder);
         folder.setBounds(100, 40, 300, 20);
