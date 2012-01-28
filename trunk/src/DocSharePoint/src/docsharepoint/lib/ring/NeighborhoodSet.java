@@ -26,4 +26,7 @@ package docsharepoint.lib.ring;
  */
 public class NeighborhoodSet {
     
+    public NeighborhoodSet(){
+        
+    }
 }
