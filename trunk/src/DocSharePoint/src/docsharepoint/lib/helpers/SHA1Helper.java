@@ -20,10 +20,55 @@
  */
 package docsharepoint.lib.helpers;
 
+import java.security.MessageDigest;
+import java.security.NoSuchAlgorithmException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
+
 /**
  * sha1 class helper
  * @author Karpouzas George
  */
 public class SHA1Helper {
     private static SHA1Helper _instance;
+    
+    private SHA1Helper(){}
+    
+    /**
+     * calculate sha1 hash
+     * @param plaintext
+     * @return String
+     */
+    public String hash(String plaintext){
+        try {
+            MessageDigest md = MessageDigest.getInstance("SHA1");
+            md.update(plaintext.getBytes()); 
+                  byte[] output = md.digest();
+            return bytesToHex(output);
+        } catch (NoSuchAlgorithmException ex) {
+            return "";
+        }
+    }
+    
+    /**
+     * get class instance create an internal SHA1Helper object
+     * @return SHA1Helper
+     */
+    public static SHA1Helper getInstance() {
+        if (_instance == null) {
+            _instance = new SHA1Helper();
+        }
+        return _instance;
+    }
+    
+    private String bytesToHex(byte[] b) {
+      char hexDigit[] = {'0', '1', '2', '3', '4', '5', '6', '7',
+                         '8', '9', 'A', 'B', 'C', 'D', 'E', 'F'};
+      StringBuilder buf = new StringBuilder();
+      for (int j=0; j<b.length; j++) {
+         buf.append(hexDigit[(b[j] >> 4) & 0x0f]);
+         buf.append(hexDigit[b[j] & 0x0f]);
+      }
+      return buf.toString();
+   }
 }
