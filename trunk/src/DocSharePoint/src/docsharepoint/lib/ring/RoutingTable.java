@@ -20,13 +20,23 @@
  */
 package docsharepoint.lib.ring;
 
+import docsharepoint.AppConfig;
+
 /**
  * represents node's routing table
  * @author Karpouzas George
  */
 public class RoutingTable {
-    
+    private Node[][] _rtable;
+    /**
+     * default constructor
+     */
     public RoutingTable(){
-        
+        AppConfig.getInstance().getN();
+        //rows = log(N)/log(2^b)
+        int rows = (int) (Math.log(AppConfig.getInstance().getN())/Math.log(4));
+        //cols = 2^b-1
+        int cols = (int) (Math.pow(2, AppConfig.getInstance().getB()) - 1);
+        this._rtable = new Node[rows][cols];
     }
 }
