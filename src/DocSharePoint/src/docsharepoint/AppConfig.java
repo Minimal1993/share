@@ -69,7 +69,11 @@ public final class AppConfig {
     /**
      * 2^b-1  2^b
      */
-    private static int b = 3;
+    private static int b = 2;
+    /**
+     * number of nodes - this number nust change accordingly
+     */
+    private static int N = 16;
     /**
      * private constructor
      */
@@ -119,6 +123,13 @@ public final class AppConfig {
      */
     public int getB(){
         return b;
+    }
+    /**
+     * number of nodes in network;
+     * @return int
+     */
+    public int getN(){
+        return N;
     }
     /**.
      * get application version
