@@ -72,7 +72,7 @@ public class AboutDialogPanel extends AbstractPanel {
 
         copyright = new Label("Copyright (c) 2010-2012 Karpouzas George");
         add(copyright);
-        copyright.setBounds(10, 30, 280, 20);
+        copyright.setBounds(10, 30, 300, 20);
 
         license = new Label("DocSharePoint is Licensed under GPLv3");
         add(license);
@@ -84,18 +84,18 @@ public class AboutDialogPanel extends AbstractPanel {
 
         textarea = new TextArea("DocSharePoint - "
     + "Open Source Distributed p2p application based on pastry\r\n"
-   + "Copyright (C) 2010-2012 DocSharePoint KARPOUZAS GEORGE\r\n\r\n"
-   + "http://docsharepoint.sourceforge.net/\r\n\r\n"
+    + "Copyright (C) 2010-2012 DocSharePoint KARPOUZAS GEORGE\r\n\r\n"
+    + "http://docsharepoint.sourceforge.net/\r\n\r\n"
     + "This program is free software: you can redistribute it and/or modify\r\n"
     + "it under the terms of the GNU General Public License as published by\r\n"
     + "the Free Software Foundation, either version 3 of the License, or\r\n"
-   + "(at your option) any later version.\r\n\r\n"
-   + "This program is distributed in the hope that it will be useful,\r\n"
-   + "but WITHOUT ANY WARRANTY; without even the implied warranty of\r\n"
-   + "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\r\n"
-   + "GNU General Public License for more details.\r\n\r\n"
-   + "You should have received a copy of the GNU General Public License\r\n"
-+ "along with this program.  If not, see <http://www.gnu.org/licenses/>.\r\n");
+    + "(at your option) any later version.\r\n\r\n"
+    + "This program is distributed in the hope that it will be useful,\r\n"
+    + "but WITHOUT ANY WARRANTY; without even the implied warranty of\r\n"
+    + "MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the\r\n"
+    + "GNU General Public License for more details.\r\n\r\n"
+    + "You should have received a copy of the GNU General Public License\r\n"
+    + "along with this program.  If not, see <http://www.gnu.org/licenses/>.\r\n");
 
         JScrollPane scroll = new JScrollPane(textarea);
         scroll.setHorizontalScrollBarPolicy(

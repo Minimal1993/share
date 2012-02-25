@@ -24,8 +24,6 @@ package docsharepoint.ui.panels;
 import docsharepoint.AppConfig;
 import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.ui.components.Button;
-import docsharepoint.ui.components.CheckBox;
-import docsharepoint.ui.components.ComboBox;
 import docsharepoint.ui.components.Label;
 import docsharepoint.ui.components.TextField;
 import docsharepoint.ui.events.Browse4FolderEvent;
@@ -41,26 +39,15 @@ public class ConnectPanel extends AbstractPanel {
     /**.
      * boot host, boot port and bind port labels
      */
-    private Label boothost, bootport, bindport, logLevelLabel,
-            firewallPolicyLabel, natSearchPolicyLabel, pingDelayLabel,
-            path2saveLabel;
+    private Label boothost, bootport, path2saveLabel;
     /**.
      * boot host, boot port, bind port
      */
-    private TextField bootHost, bootPort,
-            bindPort, logLevel, pingDelay, path2save;
+    private TextField bootHost, bootPort, path2save;
     /**.
      * connect button
      */
     private Button connect, browse;
-    /**
-     * direct connect?
-     */
-    private CheckBox direct, probeForExternalAddress;
-    /**
-     * policies
-     */
-    private ComboBox firewallPolicy, natSearchPolicy;
 
     /**.
      * default constructor
@@ -84,21 +71,12 @@ public class ConnectPanel extends AbstractPanel {
             connect.setText("Disconnect");
         }
         add(connect);
-        connect.setBounds(380, 250, 120, 20);
+        connect.setBounds(380, 100, 120, 20);
 
         browse = new Button("...", "Browse for folder",
                 new Browse4FolderEvent());
         add(browse);
-        browse.setBounds(second_column_comp_y-45, 250, 30, 20);
-
-        direct = new CheckBox("Direct Connection");
-        direct.setSelected(true);
-        add(direct);
-        direct.setBounds(10, 10, 130, 20);
-
-        probeForExternalAddress = new CheckBox("Probe for external address");
-        add(probeForExternalAddress);
-        probeForExternalAddress.setBounds(second_column_comp_y, 10, 250, 20);
+        browse.setBounds(second_column_comp_y-45, 100, 30, 20);
         
         boothost = new Label("Boot Host");
         add(boothost);
@@ -116,51 +94,9 @@ public class ConnectPanel extends AbstractPanel {
         add(bootPort);
         bootPort.setBounds(second_column_comp_y, 70, text_fields_width, 20);
 
-        bindport = new Label("Bind Port");
-        add(bindport);
-        bindport.setBounds(10, 100, 100, 20);
-
-        bindPort = new TextField("9090");
-        add(bindPort);
-        bindPort.setBounds(second_column_comp_y, 100, text_fields_width, 20);
-
-        logLevelLabel = new Label("Log Level");
-        add(logLevelLabel);
-        logLevelLabel.setBounds(10, 130, 100, 20);
-        
-        logLevel = new TextField("1000");
-        add(logLevel);
-        logLevel.setBounds(second_column_comp_y, 130, text_fields_width, 20);
-
-        firewallPolicyLabel = new Label("Firewall Policy");
-        add(firewallPolicyLabel);
-        firewallPolicyLabel.setBounds(10, 160, 160, 20);
-
-        firewallPolicy = new ComboBox(new String[] {"always", "never"});
-        firewallPolicy.setSelectedIndex(1);
-        add(firewallPolicy);
-        firewallPolicy.setBounds(second_column_comp_y, 160, text_fields_width, 20);
-
-        natSearchPolicyLabel = new Label("NAT Policy");
-        add(natSearchPolicyLabel);
-        natSearchPolicyLabel.setBounds(10, 190, 160, 20);
-
-        natSearchPolicy = new ComboBox(new String[] {"always", "never"});
-        natSearchPolicy.setSelectedIndex(1);
-        add(natSearchPolicy);
-        natSearchPolicy.setBounds(second_column_comp_y, 190, text_fields_width, 20);
-
-        pingDelayLabel = new Label("Ping Delay");
-        add(pingDelayLabel);
-        pingDelayLabel.setBounds(10, 220, 160, 20);
-
-        pingDelay = new TextField("30");
-        add(pingDelay);
-        pingDelay.setBounds(second_column_comp_y, 220, text_fields_width, 20);
-
         path2saveLabel = new Label("Storage directory");
         add(path2saveLabel);
-        path2saveLabel.setBounds(10, 250, text_fields_width, 20);
+        path2saveLabel.setBounds(10, 100, text_fields_width, 20);
 
         path2save = new TextField(System.getProperty("user.home")+
                 System.getProperty("file.separator")+
@@ -173,7 +109,7 @@ public class ConnectPanel extends AbstractPanel {
             MessagingHelper.PrintError2Console(ex.toString());
         }
         add(path2save);
-        path2save.setBounds(second_column_comp_y, 250, text_fields_width, 20);
+        path2save.setBounds(second_column_comp_y, 100, text_fields_width, 20);
         
         return true;
     }
@@ -200,19 +136,6 @@ public class ConnectPanel extends AbstractPanel {
     }
 
     /**
-     * get bind port value
-     * @return int
-     */
-    public int getBindPort(){
-        try{
-            return Integer.parseInt(bindPort.getText());
-        }
-        catch(Exception ex){
-            return -1;
-        }
-    }
-
-    /**
      * set boot host value
      * @param value
      */
@@ -226,72 +149,6 @@ public class ConnectPanel extends AbstractPanel {
      */
     public void setBootPort(int value){
         bootPort.setText(value+"");
-    }
-
-    /**
-     * set bind port value
-     * @param value
-     */
-    public void setBindPort(int value){
-        bindPort.setText(value+"");
-    }
-
-    /**
-     * connect direct?
-     * @return boolean
-     */
-    public boolean useDirectConnection(){
-        return direct.isSelected();
-    }
-
-    /**
-     * get log level value
-     * @return int
-     */
-    public int getLogLevel(){
-        try{
-            return Integer.parseInt(logLevel.getText());
-        }
-        catch(Exception ex){
-         return 1000;
-        }
-    }
-
-    /**
-     * firewall policy
-     * @return String
-     */
-    public String getFirewallPolicy(){
-        return firewallPolicy.getSelectedItem().toString();
-    }
-
-    /**
-     * nat search policy
-     * @return String
-     */
-    public String getNATPolicy(){
-        return natSearchPolicy.getSelectedItem().toString();
-    }
-
-    /**
-     * get pastry ring ping delay
-     * @return int
-     */
-    public int getPingDelay(){
-        try{
-            return Integer.parseInt(pingDelay.getText());
-        }
-        catch(Exception ex){
-         return 30;
-        }
-    }
-
-    /**
-     * probe for external address?
-     * @return boolean
-     */
-    public boolean probe4ExternalAddress(){
-        return probeForExternalAddress.isSelected();
     }
 
     /**

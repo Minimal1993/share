@@ -58,7 +58,7 @@ public class ReportDialogPanel extends AbstractPanel {
         scroll.setVerticalScrollBarPolicy(
                 ScrollPaneConstants.VERTICAL_SCROLLBAR_AS_NEEDED);
         add(scroll);
-        scroll.setBounds(10, 10, 380, parentsize.getHeight()-50);
+        scroll.setBounds(10, 10, 390, parentsize.getHeight()-20);
 
         return true;
     }

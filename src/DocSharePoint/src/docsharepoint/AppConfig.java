@@ -61,19 +61,19 @@ public final class AppConfig {
     /**
      * number of leaf set nodes
      */
-    private static int L = 8;
+    private static int L = 16;
     /**
      * number of neighborhood set nodes
      */
-    private static int M = 8;
+    private static int M = 16;
     /**
      * 2^b-1  2^b
      */
-    private static int b = 2;
+    private static int b = 4;
     /**
-     * number of nodes - this number nust change accordingly
+     * number of nodes - this number must change accordingly
      */
-    private static int N = 16;
+    private static int N = 32;
     /**
      * private constructor
      */
@@ -85,7 +85,7 @@ public final class AppConfig {
      * init variables
      */
      private void initGlobals() {
-         _version = "0.8a";
+         _version = "0.9a";
          _connected = false;
          _dspApplication = new DocSharePointApp();
          _print2Console = false;

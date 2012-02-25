@@ -25,7 +25,6 @@ import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.ui.Exceptions.SizeInvalidException;
 import docsharepoint.ui.Exceptions.WindowInitializationException;
 import docsharepoint.ui.dialogs.AboutDialog;
-
 import docsharepoint.ui.utils.Size;
 import java.awt.event.ActionEvent;
 
@@ -48,7 +47,7 @@ public class AboutMenuEvent implements ClickEvent {
                 public void actionPerformed(final ActionEvent e) {
                     about.close(); } };
             if (about.init(new Size(width, height))) {
-                about.show();
+                about.setVisible(true);
             }
         } catch (SizeInvalidException pie) {
             MessagingHelper.PrintError2Console(pie.toString());

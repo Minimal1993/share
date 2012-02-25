@@ -26,7 +26,7 @@ package docsharepoint.ui.Exceptions;
  * @author George Karpouzas
  */
 public class PositionInvalidException extends Exception {
-    /**.
+    /**
      * default constructor
      */
     public PositionInvalidException() {
