@@ -20,11 +20,15 @@
  */
 package docsharepoint.lib.ring;
 
+import docsharepoint.lib.LibPastry;
+import docsharepoint.lib.Message;
 import docsharepoint.lib.helpers.SHA1Helper;
+import docsharepoint.lib.network.PeerServer;
 import docsharepoint.ui.Exceptions.InvalidIPAddressException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
+import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -34,36 +38,25 @@ import java.util.Enumeration;
  * represents a ring node
  * @author Karpouzas George
  */
-public class Node implements Comparable<Node>{
-    private String _nodeID;
+public class Node implements Comparable<Node>, LibPastry{
+    private BigInteger _nodeID;
     private String _ip;
-    
+    private int _port;
     public LeafSet L;
     public RoutingTable R;
     public NeighborhoodSet M;
-    
-    /**
-     * default constructor listening on port 9090
-     */
-    public Node() throws InvalidIPAddressException{
-        this._ip = this._getipaddress();
-        this._nodeID = this._generateID();
-        
-        this.L = new LeafSet(this);
-        this.R = new RoutingTable();
-        this.M = new NeighborhoodSet();
-    }
     
     /**
      * constructor specifying port
      * @param port 
      */
     public Node(int port) throws InvalidIPAddressException{
-        this._nodeID = this._generateID();
         this._ip = this._getipaddress();
-
+        this._port = port;
+        this._nodeID = this._generateID();
+        
         this.L = new LeafSet(this);
-        this.R = new RoutingTable();
+        this.R = new RoutingTable(this);
         this.M = new NeighborhoodSet();
     }
     
@@ -71,7 +64,7 @@ public class Node implements Comparable<Node>{
      * get node id
      * @return String
      */
-    public String getID(){
+    public BigInteger getID(){
         return this._nodeID;
     }
     
@@ -81,6 +74,14 @@ public class Node implements Comparable<Node>{
      */
     public String getIP(){
         return this._ip;
+    }
+    
+    /**
+     * get port number
+     * @return 
+     */
+    public int getPort(){
+        return this._port;
     }
     
     private String _getipaddress(){
@@ -107,10 +108,10 @@ public class Node implements Comparable<Node>{
         }
     }
     
-    private String _generateID() throws InvalidIPAddressException{
+    private BigInteger _generateID() throws InvalidIPAddressException{
         if(this._ip.isEmpty())
             throw new InvalidIPAddressException();
-        return SHA1Helper.getInstance().hash(this._ip);
+        return SHA1Helper.Instance().hash(this._ip);
     }
     
     /**
@@ -147,5 +148,27 @@ public class Node implements Comparable<Node>{
     @Override
     public int compareTo(Node t) {
         return t.getID().compareTo(this._nodeID);
+    }
+
+    /**
+     * initialize pastry new or join
+     * @param IP
+     * @param Port
+     * @return 
+     */
+    @Override
+    public BigInteger pastryInit(String IP, int Port) {
+        new Thread(new PeerServer(Port)).start();
+        return this._nodeID;
+    }
+
+    @Override
+    public void route(Message msg, BigInteger key) {
+        throw new UnsupportedOperationException("Not supported yet.");
+    }
+
+    @Override
+    public void send(Message msg, String IP) {
+        throw new UnsupportedOperationException("Not supported yet.");
     }
 }

@@ -20,9 +20,11 @@
  */
 package docsharepoint.lib.network;
 
-import docsharepoint.AppConfig;
+import docsharepoint.lib.Message;
+import docsharepoint.lib.helpers.SHA1Helper;
 import java.io.DataInputStream;
 import java.io.IOException;
+import java.math.BigInteger;
 import java.net.Socket;
 
 /**
@@ -30,7 +32,7 @@ import java.net.Socket;
  * this thread is created for every accepted client connection
  * @author George Karpouzas
  */
-public class PeerServerThread extends Thread{
+public class ConnectionListener extends Thread{
     private PeerServer _server;
     private Socket _clientsocket;
     
@@ -39,7 +41,7 @@ public class PeerServerThread extends Thread{
      * @param server
      * @param client 
      */
-    public PeerServerThread(PeerServer server, Socket client){
+    public ConnectionListener(PeerServer server, Socket client){
         this._server = server;
         this._clientsocket = client;
     }
@@ -61,10 +63,19 @@ public class PeerServerThread extends Thread{
                 // -----------------------------------------------------------
                 // read client's message
                 // -----------------------------------------------------------
-                String message = inputfromclient.readUTF();
-                AppConfig.Instance().getReportDialog().LogMessage(message);
+                deliver(new Message(inputfromclient.readUTF()), 
+                        SHA1Helper.Instance().hash(this._clientsocket.getInetAddress().toString().replace("/", "")));
             }
             
         } catch (IOException ex) {}
+    }
+    
+    /**
+     * deliver message
+     * @param msg
+     * @param key 
+     */
+    public void deliver(Message msg, BigInteger key){
+        
     }
 }

@@ -21,6 +21,7 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
+import java.math.BigInteger;
 
 /**
  * represents node's routing table
@@ -28,22 +29,25 @@ import docsharepoint.AppConfig;
  */
 public class RoutingTable implements iSet{
     private Node[][] _rtable;
+    private Node _main;
+    
     /**
      * default constructor
      */
-    public RoutingTable(){
-        AppConfig.Instance().getN();
+    public RoutingTable(Node main){
+        this._main = main;
         //rows = log(N)/log(2^b)
-        int rows = (int) (Math.log(AppConfig.Instance().getN())/Math.log(4));
+        //int rows = (int) (Math.log(AppConfig.Instance().getN())/Math.log(4));
         //cols = 2^b-1
-        int cols = (int) (Math.pow(2, AppConfig.Instance().getB()) - 1);
-        this._rtable = new Node[rows][cols];
+        //int cols = (int) (Math.pow(2, AppConfig.Instance().getB()) - 1);
+        this._rtable = new Node[AppConfig.Instance().getN()][AppConfig.Instance().getM()];
     }
     
     /**
      * add node
      * @param n 
      */
+    @Override
     public void add(Node n){
         
     }
@@ -52,6 +56,7 @@ public class RoutingTable implements iSet{
      * remove node
      * @param n 
      */
+    @Override
     public void remove(Node n){
         
     }
@@ -61,7 +66,8 @@ public class RoutingTable implements iSet{
      * @param nodeid
      * @return 
      */
-    public Node search(String nodeid){
+    @Override
+    public Node search(BigInteger nodeid){
         Node found = null;
         return found;
     }

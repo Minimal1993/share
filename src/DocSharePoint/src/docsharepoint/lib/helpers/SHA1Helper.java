@@ -20,8 +20,10 @@
  */
 package docsharepoint.lib.helpers;
 
+import java.math.BigInteger;
 import java.security.MessageDigest;
 import java.security.NoSuchAlgorithmException;
+import java.util.Arrays;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
@@ -39,14 +41,16 @@ public class SHA1Helper {
      * @param plaintext
      * @return String
      */
-    public String hash(String plaintext){
+    public BigInteger hash(String plaintext){
         try {
             MessageDigest md = MessageDigest.getInstance("SHA1");
             md.update(plaintext.getBytes()); 
-                  byte[] output = md.digest();
-            return bytesToHex(output);
+            byte[] output = md.digest();
+            BigInteger ret = new BigInteger(1, output);
+            
+            return ret;
         } catch (NoSuchAlgorithmException ex) {
-            return "";
+            return null;
         }
     }
     
@@ -54,7 +58,7 @@ public class SHA1Helper {
      * get class instance create an internal SHA1Helper object
      * @return SHA1Helper
      */
-    public static SHA1Helper getInstance() {
+    public static SHA1Helper Instance() {
         if (_instance == null) {
             _instance = new SHA1Helper();
         }

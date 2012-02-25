@@ -22,10 +22,13 @@
 package docsharepoint.ui.events;
 
 import docsharepoint.AppConfig;
-import docsharepoint.lib.PastryLib;
+import docsharepoint.lib.LibPastry;
+import docsharepoint.lib.ring.Node;
+import docsharepoint.ui.Exceptions.InvalidIPAddressException;
 import docsharepoint.ui.components.Button;
 import docsharepoint.ui.panels.ConnectPanel;
 import java.awt.event.ActionEvent;
+import java.math.BigInteger;
 
 /**
  * connection event
@@ -51,16 +54,25 @@ public class ConnectEvent implements ClickEvent {
         Object obj = e.getSource();
         Button but = (Button) obj;
         if(but.getText().compareTo("Connect")==0) {
-            if(!cp.getBootHost().isEmpty() &&
-                   cp.getBootPort()!=-1){
-                    PastryLib plib = new PastryLib();
-                    String nodeid = plib.pastryInit(cp.getBootHost(), cp.getBootPort());
+            if(!cp.getBootHost().isEmpty() && cp.getBootPort()!=-1){
+                Node n;
+                BigInteger nodeid = null;
+                
+                //-------------------------------------------------------
+                // create new node locally to join a pastry network or
+                // create a new pastry network
+                //-------------------------------------------------------
+                try{
+                    n = new Node(cp.getBootPort());
+                    nodeid = n.pastryInit(cp.getBootHost(), cp.getBootPort());
+                }
+                catch(InvalidIPAddressException ipac){
                     AppConfig.Instance().getReportDialog().LogMessage("Node has been initialized");
-                    AppConfig.Instance().getReportDialog().LogMessage("Node ID + "+nodeid);
-                    if(nodeid!=null){
-                        AppConfig.Instance().setConnected(true);
-                        but.setText("Disconnect");
-                    }
+                }
+                
+                AppConfig.Instance().getReportDialog().LogMessage("Node ID + " + nodeid);
+                AppConfig.Instance().setConnected(true);
+                but.setText("Disconnect");
             }
         }
         else{
