@@ -61,7 +61,7 @@ public class MainWindow extends AbstractWindow {
      * default constructor
      */
     public MainWindow() {
-        super("DocSharePoint - " + AppConfig.getInstance().getVersion());
+        super("DocSharePoint - " + AppConfig.Instance().getVersion());
         setResizable(false);
         menubar = new JMenuBar();
         mainPanel = new MainWindowPanel();

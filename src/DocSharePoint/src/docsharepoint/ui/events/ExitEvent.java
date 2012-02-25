@@ -35,6 +35,6 @@ public class ExitEvent implements ClickEvent {
      * @param e action event
      */
     public final void actionPerformed(final ActionEvent e) {
-        AppConfig.getInstance().getApplication().end();
+        AppConfig.Instance().getApplication().end();
     }
 }

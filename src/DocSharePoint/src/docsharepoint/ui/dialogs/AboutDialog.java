@@ -43,7 +43,7 @@ public class AboutDialog extends AbstractDialog {
      * default constructor
      */
     public AboutDialog() {
-        super("About DocSharePoint - " + AppConfig.getInstance().getVersion());
+        super("About DocSharePoint - " + AppConfig.Instance().getVersion());
         adp = new AboutDialogPanel();
     }
 

@@ -69,5 +69,6 @@ public class ReportDialogPanel extends AbstractPanel {
      */
     public void append2TextArea(String message){
         textarea.setText(textarea.getText() + "\r\n"+message);
+        textarea.setCaretPosition(textarea.getText().length() - 1);
     }
 }

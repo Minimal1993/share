@@ -27,7 +27,7 @@ import docsharepoint.ui.components.Button;
 import docsharepoint.ui.components.Label;
 import docsharepoint.ui.components.TextField;
 import docsharepoint.ui.events.Browse4FolderEvent;
-import docsharepoint.ui.events.ServerConnectEvent;
+import docsharepoint.ui.events.ConnectEvent;
 import docsharepoint.ui.utils.Size;
 import java.io.File;
 
@@ -66,8 +66,8 @@ public class ConnectPanel extends AbstractPanel {
         final int text_fields_width = 180;
         
         connect = new Button("Connect", "Connect with pastry network",
-                new ServerConnectEvent(this));
-        if (AppConfig.getInstance().isConnected()) {
+                new ConnectEvent(this));
+        if (AppConfig.Instance().isConnected()) {
             connect.setText("Disconnect");
         }
         add(connect);

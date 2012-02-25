@@ -22,51 +22,50 @@
 package docsharepoint.ui.events;
 
 import docsharepoint.AppConfig;
+import docsharepoint.lib.PastryLib;
 import docsharepoint.ui.components.Button;
 import docsharepoint.ui.panels.ConnectPanel;
 import java.awt.event.ActionEvent;
 
 /**
- *
+ * connection event
  * @author George Karpouzas <gkarpouzas@webnetsoft.gr>
  */
-public class ServerConnectEvent implements ClickEvent {
+public class ConnectEvent implements ClickEvent {
     private ConnectPanel cp;
+    
     /**
      * constructor specifying connect panel
      * @param connectpanel
      */
-    public ServerConnectEvent(ConnectPanel connectpanel){
+    public ConnectEvent(ConnectPanel connectpanel){
         cp = connectpanel;
     }
-    /**.
+    
+    /**
      * action
      * @param e
      */
+    @Override
     public void actionPerformed(ActionEvent e) {
         Object obj = e.getSource();
         Button but = (Button) obj;
         if(but.getText().compareTo("Connect")==0) {
             if(!cp.getBootHost().isEmpty() &&
                    cp.getBootPort()!=-1){
-                /*AppConfig.getInstance().getPastryApp().init(10,
-                        cp.useDirectConnection(),
-                        cp.getLogLevel(),
-                        cp.getFirewallPolicy(),
-                        cp.getNATPolicy(),
-                        cp.getPingDelay(),
-                        cp.probe4ExternalAddress(),
-                        cp.getPath());*/
-                //boolean connected = 
-                        //AppConfig.getInstance().getPastryApp().connect(cp.getBootHost(),
-                        //cp.getBootPort(), cp.getBindPort());
-                //AppConfig.getInstance().setConnected(connected);
-                //if(connected)but.setText("Disconnect");
+                    PastryLib plib = new PastryLib();
+                    String nodeid = plib.pastryInit(cp.getBootHost(), cp.getBootPort());
+                    AppConfig.Instance().getReportDialog().LogMessage("Node has been initialized");
+                    AppConfig.Instance().getReportDialog().LogMessage("Node ID + "+nodeid);
+                    if(nodeid!=null){
+                        AppConfig.Instance().setConnected(true);
+                        but.setText("Disconnect");
+                    }
             }
         }
         else{
             //AppConfig.getInstance().getPastryApp().disconnect();
-            AppConfig.getInstance().setConnected(false);
+            AppConfig.Instance().setConnected(false);
             but.setText("Connect");
         }
         

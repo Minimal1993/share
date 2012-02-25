@@ -22,6 +22,7 @@
 package docsharepoint;
 
 import docsharepoint.app.DocSharePointApp;
+import docsharepoint.lib.ring.Node;
 import docsharepoint.ui.dialogs.ReportDialog;
 import docsharepoint.ui.windows.MainWindow;
 
@@ -74,6 +75,12 @@ public final class AppConfig {
      * number of nodes - this number must change accordingly
      */
     private static int N = 32;
+    
+    /**
+     * represents the local node
+     */
+    public Node localNode;
+    
     /**
      * private constructor
      */
@@ -95,7 +102,7 @@ public final class AppConfig {
      * get app_config class instance
      * @return APP_CONFIG
      */
-    public static AppConfig getInstance() {
+    public static AppConfig Instance() {
         if (_instance == null) {
             _instance = new AppConfig();
         }

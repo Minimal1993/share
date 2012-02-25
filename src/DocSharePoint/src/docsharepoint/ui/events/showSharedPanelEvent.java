@@ -36,9 +36,9 @@ public class showSharedPanelEvent implements ClickEvent {
      */
     public final void actionPerformed(final ActionEvent e) {
         SharedPanel sp = new SharedPanel();
-        sp.init(AppConfig.getInstance().
+        sp.init(AppConfig.Instance().
                 getMainWindow().getMainPanel().getPanelSize());
-        AppConfig.getInstance().getMainWindow().getMainPanel().addPanel(sp);
+        AppConfig.Instance().getMainWindow().getMainPanel().addPanel(sp);
         sp.revalidate();
         sp.repaint();
     }

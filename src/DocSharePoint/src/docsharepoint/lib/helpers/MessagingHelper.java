@@ -39,8 +39,8 @@ public class MessagingHelper {
      * @param message
      */
     public static void Print2Console(String message){
-        if(AppConfig.getInstance().print2Console())System.out.println(message);
-        if(AppConfig.getInstance().getReportDialog()!=null)AppConfig.getInstance().getReportDialog().LogMessage(message);
+        if(AppConfig.Instance().print2Console())System.out.println(message);
+        if(AppConfig.Instance().getReportDialog()!=null)AppConfig.Instance().getReportDialog().LogMessage(message);
     }
 
     /**
@@ -48,8 +48,8 @@ public class MessagingHelper {
      * @param message
      */
     public static void PrintError2Console(String message){
-        if(AppConfig.getInstance().print2Console())System.err.println(message);
-        if(AppConfig.getInstance().getReportDialog()!=null)AppConfig.getInstance().getReportDialog().LogMessage(message);
+        if(AppConfig.Instance().print2Console())System.err.println(message);
+        if(AppConfig.Instance().getReportDialog()!=null)AppConfig.Instance().getReportDialog().LogMessage(message);
     }
 
     /**
@@ -59,7 +59,7 @@ public class MessagingHelper {
      */
     public static void ShowMessage(String message, String title){
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.INFORMATION_MESSAGE);
-        if(AppConfig.getInstance().getReportDialog()!=null)AppConfig.getInstance().getReportDialog().LogMessage(message);
+        if(AppConfig.Instance().getReportDialog()!=null)AppConfig.Instance().getReportDialog().LogMessage(message);
     }
 
     /**
@@ -69,6 +69,6 @@ public class MessagingHelper {
      */
     public static void ShowErrorMessage(String message, String title){
         JOptionPane.showMessageDialog(null, message, title, JOptionPane.ERROR_MESSAGE);
-        if(AppConfig.getInstance().getReportDialog()!=null)AppConfig.getInstance().getReportDialog().LogMessage(message);
+        if(AppConfig.Instance().getReportDialog()!=null)AppConfig.Instance().getReportDialog().LogMessage(message);
     }
 }
