@@ -42,14 +42,6 @@ public class PeerServer extends Thread{
     public PeerServer(int port){
         this._port = port;
     }
-    
-    /**
-     * get server port
-     * @return int
-     */
-    public int getPort(){
-        return this._port;
-    }
 
     @Override
     public void run() {
@@ -73,12 +65,12 @@ public class PeerServer extends Thread{
                 // -----------------------------------------------------------
                 Socket client = this._socket.accept();
                 AppConfig.Instance().getReportDialog().LogMessage("Connection accepted from " 
-                        + client + ".");
+                        + client.getInetAddress().toString().replace("/", "") + ".");
                 
                 // -----------------------------------------------------------
-                // start client thread
+                // start connection listener
                 // -----------------------------------------------------------
-                new PeerServerThread(this, client).start();
+                new ConnectionListener(this, client).start();
             }
             
             

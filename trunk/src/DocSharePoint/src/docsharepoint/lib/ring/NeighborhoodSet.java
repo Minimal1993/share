@@ -21,6 +21,7 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -37,13 +38,14 @@ public class NeighborhoodSet implements iSet{
      * @param main 
      */
     public NeighborhoodSet(){
-        this._list = new ArrayList<Node>();
+        this._list = new ArrayList<>();
     }
     
     /**
      * add new node
      * @param n 
      */
+    @Override
     public void add(Node n){
         if(this._list.size() < AppConfig.Instance().getM()) {
             this._list.add(n);
@@ -55,6 +57,7 @@ public class NeighborhoodSet implements iSet{
      * remove a node
      * @param n 
      */
+    @Override
     public void remove(Node n){
         this._list.remove(n);
     }
@@ -64,7 +67,8 @@ public class NeighborhoodSet implements iSet{
      * @param nodeid
      * @return 
      */
-    public Node search(String nodeid){
+    @Override
+    public Node search(BigInteger nodeid){
         Node found = null;
         Iterator<Node> iter = this._list.iterator();
         while(iter.hasNext()){

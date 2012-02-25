@@ -21,6 +21,7 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -32,25 +33,26 @@ import java.util.List;
  */
 public class LeafSet implements iSet{
     private List<Node> _smaller, _bigger;
-    private Node _owner;
+    private Node _main;
     
     /**
      * constructor specifying main leafset node
      * @param main 
      */
     public LeafSet(Node main){
-        this._smaller = new ArrayList<Node>();
-        this._bigger = new ArrayList<Node>();
-        this._owner = main;
+        this._smaller = new ArrayList<>();
+        this._bigger = new ArrayList<>();
+        this._main = main;
     }
     
     /**
      * add new node
      * @param n 
      */
+    @Override
     public void add(Node n){
-        if(n.compareTo(this._owner)==0) return;
-        if(n.compareTo(this._owner)<0 && this._smaller.size() < 
+        if(n.compareTo(this._main)==0) return;
+        if(n.compareTo(this._main)<0 && this._smaller.size() < 
                 AppConfig.Instance().getL()/2) {
             this._smaller.add(n);
             Collections.sort(this._smaller);
@@ -67,20 +69,22 @@ public class LeafSet implements iSet{
      * remove a node
      * @param n 
      */
+    @Override
     public void remove(Node n){
         this._smaller.remove(n);
         this._bigger.remove(n);
     }
     
     /**
-     * search for give nodeid
+     * search for given nodeid
      * @param nodeid
      * @return 
      */
-    public Node search(String nodeid){
+    @Override
+    public Node search(BigInteger nodeid){
         Node found = null;
-        if(nodeid.compareTo(this._owner.getID())==0)return this._owner;
-        if(nodeid.compareTo(this._owner.getID())<0){
+        if(nodeid.compareTo(this._main.getID())==0)return this._main;
+        if(nodeid.compareTo(this._main.getID())<0){
             Iterator<Node> iter = this._smaller.iterator();
             while(iter.hasNext()){
                 Node item = iter.next();

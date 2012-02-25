@@ -18,16 +18,33 @@
  *  You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package docsharepoint.lib.ring;
+package docsharepoint.lib;
 
 import java.math.BigInteger;
 
 /**
- * interface all sets must implement
+ * represents the pastry lib
  * @author Karpouzas George
  */
-public interface iSet {
-    public void add(Node n);
-    public void remove(Node n);
-    public Node search(BigInteger nodeid);
+public interface LibPastry {
+    
+    /**
+     * initialize local node
+     * @return nodeid
+     */
+    public BigInteger pastryInit(String IP, int Port);
+    
+    /**
+     * route message
+     * @param msg
+     * @param key 
+     */
+    public void route(Message msg, BigInteger key);
+    
+    /**
+     * send message to specific ip address
+     * @param msg
+     * @param IP 
+     */
+    public void send(Message msg, String IP);
 }
