@@ -46,16 +46,19 @@ public class DocSharePointApp{
     public final void start() throws ApplicationStartupException {
         AppConfig.getInstance().setMainWindow(new MainWindow());
         AppConfig.getInstance().setReportDialog(new ReportDialog());
+        int initial_width = 600;
+        int initial_height = 400;
         
         try {
-            int x = Monitor.getCenter(new Size(800, 600)).getX() + 810;
-            int y = Monitor.getCenter(new Size(800, 600)).getY();
+            int x = Monitor.getCenter(new Size(initial_width, initial_height)).getX() 
+                    + initial_width;
+            int y = Monitor.getCenter(new Size(initial_width, initial_height)).getY();
             if(AppConfig.getInstance().getMainWindow().init(
-                    new Bounds(new Position(x-810-200, y), new Size(800, 600))) &&
+                    new Bounds(new Position(x - initial_width - 200, y), 
+                    new Size(initial_width, initial_height))) &&
                     AppConfig.getInstance().getReportDialog().init(
-                    new Bounds(
-                    new Position(x-200, y),
-                    new Size(410, 600)))){
+                    new Bounds(new Position(x-180, y),
+                    new Size(410, initial_height)))){
                 AppConfig.getInstance().getReportDialog().showWindow();
                 AppConfig.getInstance().getMainWindow().showWindow();
             }

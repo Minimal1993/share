@@ -21,6 +21,7 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.lib.helpers.SHA1Helper;
+import docsharepoint.ui.Exceptions.InvalidIPAddressException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
@@ -28,14 +29,12 @@ import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
 import java.util.Enumeration;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 /**
  * represents a ring node
  * @author Karpouzas George
  */
-public class Node implements Comparable{
+public class Node implements Comparable<Node>{
     private String _nodeID;
     private String _ip;
     private int _port;
@@ -46,11 +45,11 @@ public class Node implements Comparable{
     /**
      * default constructor listening on port 9090
      */
-    public Node(){
-        this._nodeID = this._generateID();
+    public Node() throws InvalidIPAddressException{
         this._ip = this._getipaddress();
         this._port = 9090;
-
+        this._nodeID = this._generateID();
+        
         this.L = new LeafSet(this);
         this.R = new RoutingTable();
         this.M = new NeighborhoodSet();
@@ -60,7 +59,7 @@ public class Node implements Comparable{
      * constructor specifying port
      * @param port 
      */
-    public Node(int port){
+    public Node(int port) throws InvalidIPAddressException{
         this._nodeID = this._generateID();
         this._ip = this._getipaddress();
         this._port = port;
@@ -95,7 +94,7 @@ public class Node implements Comparable{
     }
     
     private String _getipaddress(){
-        String ipaddress = "0.0.0.0";
+        String ipaddress = "";
         try {
             for (Enumeration<NetworkInterface> eni = 
                 NetworkInterface.getNetworkInterfaces();
@@ -118,17 +117,10 @@ public class Node implements Comparable{
         }
     }
     
-    private String _generateID(){
+    private String _generateID() throws InvalidIPAddressException{
+        if(this._ip.isEmpty())
+            throw new InvalidIPAddressException();
         return SHA1Helper.getInstance().hash(this._ip + ":" + this._port);
-    }
-
-    /**
-     * compare nodes by comparing their ids
-     * @param t
-     * @return int
-     */
-    public int compareTo(Object t) {
-        return ((Node) t).getID().compareTo(this._nodeID);
     }
     
     /**
@@ -155,5 +147,14 @@ public class Node implements Comparable{
         } catch (IOException ex) {
             return -1;
         }
+    }
+
+    /**
+     * compare nodes
+     * @param t
+     * @return 
+     */
+    public int compareTo(Node t) {
+        return t.getID().compareTo(this._nodeID);
     }
 }

@@ -24,13 +24,14 @@ import docsharepoint.AppConfig;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
+import java.util.List;
 
 /**
  * represents node's leaf set
  * @author Karpouzas George
  */
 public class LeafSet implements iSet{
-    private ArrayList<Node> _smaller, _bigger;
+    private List<Node> _smaller, _bigger;
     private Node _owner;
     
     /**

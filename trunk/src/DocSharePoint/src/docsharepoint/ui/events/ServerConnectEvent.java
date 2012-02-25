@@ -48,8 +48,7 @@ public class ServerConnectEvent implements ClickEvent {
         Button but = (Button) obj;
         if(but.getText().compareTo("Connect")==0) {
             if(!cp.getBootHost().isEmpty() &&
-                   cp.getBootPort()!=-1 &&
-                   cp.getBindPort()!=-1){
+                   cp.getBootPort()!=-1){
                 /*AppConfig.getInstance().getPastryApp().init(10,
                         cp.useDirectConnection(),
                         cp.getLogLevel(),
