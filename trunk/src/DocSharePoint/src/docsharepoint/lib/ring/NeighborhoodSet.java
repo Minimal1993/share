@@ -45,7 +45,7 @@ public class NeighborhoodSet implements iSet{
      * @param n 
      */
     public void add(Node n){
-        if(this._list.size() < AppConfig.getInstance().getM()) {
+        if(this._list.size() < AppConfig.Instance().getM()) {
             this._list.add(n);
             Collections.sort(this._list);
         }

@@ -1,3 +1,4 @@
+
 /*
  *  DocSharePoint
  *  Open Source Distributed p2p system based on pastry
@@ -18,15 +19,15 @@
  *  You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package docsharepoint.chat.client;
+package docsharepoint.lib.network;
 
+import docsharepoint.AppConfig;
+import docsharepoint.lib.Message;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
 
 /**
  * represents the peer client
@@ -40,37 +41,35 @@ public class PeerClient implements Runnable{
     private int _port;
     private DataOutputStream _output;
     private DataInputStream _input;
-    private JTextField _text;
-    private JTextArea _area;
+    private Message _msg;
     
     /**
      * constructor providing server-host and server listening port
      * @param host
      * @param port 
      */
-    public PeerClient(String host, int port, JTextArea area, JTextField text){
+    public PeerClient(String host, int port, Message msg){
         
         // -----------------------------------------------------------
         // init
         // -----------------------------------------------------------
         this._host = host;
         this._port = port;
-        this._area = area;
-        this._text = text;
+        this._msg = msg;
     }
     
     /**
      * connect to the server
      */
-    public boolean connect(){
+    @Override
+    public void run(){
         try {
             
             // -----------------------------------------------------------
             // connect to server
             // -----------------------------------------------------------
             this._socket = new Socket(this._host, this._port);            
-            System.out.println("Connected to server.");
-            
+            AppConfig.Instance().getReportDialog().LogMessage("Connected to pastry network.");
             
             // -----------------------------------------------------------
             // get output stream
@@ -83,21 +82,20 @@ public class PeerClient implements Runnable{
             // -----------------------------------------------------------
             this._input = new DataInputStream(this._socket.getInputStream());
             
+            try {
+                this._output.writeUTF(this._msg.getMessage());
             
-            // -----------------------------------------------------------
-            // start the thread to handle communication
-            // -----------------------------------------------------------
-            new Thread(this).start();
-            return true;          
+            } catch (IOException ex) {
+                AppConfig.Instance().getReportDialog().LogMessage("Error: Sending message to the server.");
+            }
+              
         } catch (UnknownHostException ex) {
-            System.err.println("Error: Unable to connect to the server.");
-            return false;
+            AppConfig.Instance().getReportDialog().LogMessage("Error: Unable to connect to the server.");
         } catch (IOException ex) {
-            System.err.println("Error: Unable to connect to the server.");
-            return false;
+            AppConfig.Instance().getReportDialog().LogMessage("Error: Unable to connect to the server.");
         }
     }
-
+    
     /**
      * disconnect from server
      */
@@ -105,45 +103,5 @@ public class PeerClient implements Runnable{
         try {
             this._socket.close();
         } catch (IOException ex) {}
-    }
-    
-    /**
-     * handle communication on separated thread
-     */
-    @Override
-    public void run() {
-        
-        while(true){
-            String message = "";
-            try {
-                
-                // -----------------------------------------------------------
-                // get message
-                // -----------------------------------------------------------
-                message = this._input.readUTF();
-                this._area.append(":" + message + "\r\n");
-                
-            } catch (Exception ex) {
-                System.exit(0);
-            }
-        }
-    }
-    
-    public void sendMessage(String message){
-        try {
-            
-            // -----------------------------------------------------------
-            // send message to the server
-            // -----------------------------------------------------------
-            this._output.writeUTF(message);
-            
-            // -----------------------------------------------------------
-            // clear text field
-            // -----------------------------------------------------------
-            this._text.setText("");
-            
-        } catch (IOException ex) {
-            System.err.println("Error: Sending message to the server.");
-        }
     }
 }

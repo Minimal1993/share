@@ -34,7 +34,7 @@ import docsharepoint.ui.utils.Size;
 import docsharepoint.ui.windows.MainWindow;
 
 /**
- *
+ * represents the pastry application
  * @author George Karpouzas <gkarpouzas@webnetsoft.gr>
  */
 public class DocSharePointApp{
@@ -44,8 +44,8 @@ public class DocSharePointApp{
      * @throws ApplicationStartupException thrown on failure
      */
     public final void start() throws ApplicationStartupException {
-        AppConfig.getInstance().setMainWindow(new MainWindow());
-        AppConfig.getInstance().setReportDialog(new ReportDialog());
+        AppConfig.Instance().setMainWindow(new MainWindow());
+        AppConfig.Instance().setReportDialog(new ReportDialog());
         int initial_width = 600;
         int initial_height = 400;
         
@@ -53,23 +53,17 @@ public class DocSharePointApp{
             int x = Monitor.getCenter(new Size(initial_width, initial_height)).getX() 
                     + initial_width;
             int y = Monitor.getCenter(new Size(initial_width, initial_height)).getY();
-            if(AppConfig.getInstance().getMainWindow().init(
+            if(AppConfig.Instance().getMainWindow().init(
                     new Bounds(new Position(x - initial_width - 200, y), 
                     new Size(initial_width, initial_height))) &&
-                    AppConfig.getInstance().getReportDialog().init(
+                    AppConfig.Instance().getReportDialog().init(
                     new Bounds(new Position(x-180, y),
                     new Size(410, initial_height)))){
-                AppConfig.getInstance().getReportDialog().showWindow();
-                AppConfig.getInstance().getMainWindow().showWindow();
+                AppConfig.Instance().getReportDialog().showWindow();
+                AppConfig.Instance().getMainWindow().showWindow();
             }
             else end();
-        } catch (SizeInvalidException pie) {
-            end();
-        }
-        catch(PositionInvalidException pie){
-            end();
-        }
-        catch(WindowInitializationException wie){
+        } catch (SizeInvalidException | PositionInvalidException | WindowInitializationException pie) {
             end();
         }
     }

@@ -51,12 +51,12 @@ public class LeafSet implements iSet{
     public void add(Node n){
         if(n.compareTo(this._owner)==0) return;
         if(n.compareTo(this._owner)<0 && this._smaller.size() < 
-                AppConfig.getInstance().getL()/2) {
+                AppConfig.Instance().getL()/2) {
             this._smaller.add(n);
             Collections.sort(this._smaller);
         }
         else{
-            if(this._bigger.size() < AppConfig.getInstance().getL()/2){
+            if(this._bigger.size() < AppConfig.Instance().getL()/2){
                 this._bigger.add(n);
                 Collections.sort(this._bigger);
             }

@@ -32,11 +32,11 @@ public class RoutingTable implements iSet{
      * default constructor
      */
     public RoutingTable(){
-        AppConfig.getInstance().getN();
+        AppConfig.Instance().getN();
         //rows = log(N)/log(2^b)
-        int rows = (int) (Math.log(AppConfig.getInstance().getN())/Math.log(4));
+        int rows = (int) (Math.log(AppConfig.Instance().getN())/Math.log(4));
         //cols = 2^b-1
-        int cols = (int) (Math.pow(2, AppConfig.getInstance().getB()) - 1);
+        int cols = (int) (Math.pow(2, AppConfig.Instance().getB()) - 1);
         this._rtable = new Node[rows][cols];
     }
     

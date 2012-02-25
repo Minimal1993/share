@@ -43,7 +43,7 @@ public class ReportDialog extends AbstractDialog {
      * default constructor
      */
     public ReportDialog() {
-        super("DocSharePoint - " + AppConfig.getInstance().getVersion() + " - Logs ");
+        super("DocSharePoint - " + AppConfig.Instance().getVersion() + " - Logs ");
         rdp = new ReportDialogPanel();
         setModal(false);
         setDefaultCloseOperation(DO_NOTHING_ON_CLOSE);

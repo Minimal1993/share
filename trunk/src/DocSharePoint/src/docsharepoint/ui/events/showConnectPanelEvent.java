@@ -49,9 +49,9 @@ public class showConnectPanelEvent implements ClickEvent {
      */
     public final void actionPerformed(final ActionEvent e) {
         ConnectPanel cp = new ConnectPanel();
-        cp.init(AppConfig.getInstance().
+        cp.init(AppConfig.Instance().
                 getMainWindow().getMainPanel().getPanelSize());
-        AppConfig.getInstance().getMainWindow().getMainPanel().addPanel(cp);
+        AppConfig.Instance().getMainWindow().getMainPanel().addPanel(cp);
         cp.revalidate();
         cp.repaint();
     }

@@ -31,7 +31,7 @@ import java.util.HashMap;
 /**
  * represents the peer server
  * this server is running on each peer and is listening
- * for incoming connections to the peer for chating
+ * for incoming connections to the peer
  * @author George Karpouzas
  */
 public class PeerServer {

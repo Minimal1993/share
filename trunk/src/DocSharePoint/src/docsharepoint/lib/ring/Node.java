@@ -37,7 +37,7 @@ import java.util.Enumeration;
 public class Node implements Comparable<Node>{
     private String _nodeID;
     private String _ip;
-    private int _port;
+    
     public LeafSet L;
     public RoutingTable R;
     public NeighborhoodSet M;
@@ -47,7 +47,6 @@ public class Node implements Comparable<Node>{
      */
     public Node() throws InvalidIPAddressException{
         this._ip = this._getipaddress();
-        this._port = 9090;
         this._nodeID = this._generateID();
         
         this.L = new LeafSet(this);
@@ -62,7 +61,6 @@ public class Node implements Comparable<Node>{
     public Node(int port) throws InvalidIPAddressException{
         this._nodeID = this._generateID();
         this._ip = this._getipaddress();
-        this._port = port;
 
         this.L = new LeafSet(this);
         this.R = new RoutingTable();
@@ -83,14 +81,6 @@ public class Node implements Comparable<Node>{
      */
     public String getIP(){
         return this._ip;
-    }
-    
-    /**
-     * get node port
-     * @return int
-     */
-    public int getPort(){
-        return this._port;
     }
     
     private String _getipaddress(){
@@ -120,7 +110,7 @@ public class Node implements Comparable<Node>{
     private String _generateID() throws InvalidIPAddressException{
         if(this._ip.isEmpty())
             throw new InvalidIPAddressException();
-        return SHA1Helper.getInstance().hash(this._ip + ":" + this._port);
+        return SHA1Helper.getInstance().hash(this._ip);
     }
     
     /**
@@ -154,6 +144,7 @@ public class Node implements Comparable<Node>{
      * @param t
      * @return 
      */
+    @Override
     public int compareTo(Node t) {
         return t.getID().compareTo(this._nodeID);
     }

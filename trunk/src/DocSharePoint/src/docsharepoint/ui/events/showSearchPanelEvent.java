@@ -37,9 +37,9 @@ public class showSearchPanelEvent implements ClickEvent {
      */
     public final void actionPerformed(final ActionEvent e) {
         SearchPanel sp = new SearchPanel();
-        sp.init(AppConfig.getInstance().
+        sp.init(AppConfig.Instance().
                 getMainWindow().getMainPanel().getPanelSize());
-        AppConfig.getInstance().getMainWindow().getMainPanel().addPanel(sp);
+        AppConfig.Instance().getMainWindow().getMainPanel().addPanel(sp);
         sp.revalidate();
         sp.repaint();
     }

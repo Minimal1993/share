@@ -66,7 +66,7 @@ public class AboutDialogPanel extends AbstractPanel {
         okbutton.setBounds(145, 300, 100, 20);
 
         product = new Label("DocSharePoint "
-                + AppConfig.getInstance().getVersion());
+                + AppConfig.Instance().getVersion());
         add(product);
         product.setBounds(10, 10, 180, 20);
 

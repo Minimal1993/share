@@ -18,30 +18,17 @@
  *  You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
+package docsharepoint.ui.Exceptions;
 
-package docsharepoint;
-
-import docsharepoint.app.Exceptions.ApplicationStartupException;
-
-/**.
- * main class
+/**
+ * exception thrown whenever ip address is empty
  * @author George Karpouzas
  */
-public final class Run {
-
-    /**.
-     * private constructor
+public class InvalidIPAddressException extends Exception{
+    /**
+     * default constructor
      */
-    private Run() { }
-    /**.
-     * run method
-     * @param args command line arguments
-     */
-    public static void main(final String[] args) {
-        try {
-            AppConfig.Instance().getApplication().start();
-        } catch (ApplicationStartupException ex) {
-            System.exit(1);
-        }
+    public InvalidIPAddressException() {
+        super("Invalid IP Address");
     }
 }
