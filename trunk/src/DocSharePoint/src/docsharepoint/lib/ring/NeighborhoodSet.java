@@ -31,7 +31,7 @@ import java.util.Iterator;
  * @author Karpouzas George
  */
 public class NeighborhoodSet implements iSet{
-    private ArrayList<Node> _list;
+    private ArrayList<NodeInfo> _list;
     private Node _main;
     
     /**
@@ -48,7 +48,7 @@ public class NeighborhoodSet implements iSet{
      * @param n 
      */
     @Override
-    public void add(Node n){
+    public void add(NodeInfo n){
         if(this._list.size() == AppConfig.Instance().getM())
             this._replaceBiggest(n);
         else
@@ -61,7 +61,7 @@ public class NeighborhoodSet implements iSet{
      * @param n 
      */
     @Override
-    public void remove(Node n){
+    public void remove(NodeInfo n){
         this._list.remove(n);
     }
     
@@ -71,11 +71,11 @@ public class NeighborhoodSet implements iSet{
      * @return 
      */
     @Override
-    public Node search(NodeId nodeid){
-        Node found = null;
-        Iterator<Node> iter = this._list.iterator();
+    public NodeInfo search(NodeId nodeid){
+        NodeInfo found = null;
+        Iterator<NodeInfo> iter = this._list.iterator();
         while(iter.hasNext()){
-            Node item = iter.next();
+            NodeInfo item = iter.next();
             if(item.getID().compareTo(nodeid)==0){
                 found = item;
                 break;
@@ -84,9 +84,10 @@ public class NeighborhoodSet implements iSet{
         return found;
     }
     
-    private void _replaceBiggest(Node n){
+    private void _replaceBiggest(NodeInfo n){
         //the set is already sorted so just remove the last element if n is nearer
-        if ( this._main.distance(n) < this._main.distance(this._list.get(this._list.size()-1))){
+        if ( this._main.distance(n.getIP()) < 
+                this._main.distance(this._list.get(this._list.size()-1).getIP())){
             this._list.remove(this._list.size()-1);
             this._list.add(n);
         }

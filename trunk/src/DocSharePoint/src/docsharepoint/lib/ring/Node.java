@@ -39,9 +39,7 @@ import java.util.Enumeration;
  * @author Karpouzas George
  */
 public class Node implements Comparable<Node>, LibPastry{
-    private NodeId _nodeID;
-    private String _ip;
-    private int _port;
+    private NodeInfo _nodeinfo;
     public LeafSet L;
     public RoutingTable R;
     public NeighborhoodSet M;
@@ -51,9 +49,9 @@ public class Node implements Comparable<Node>, LibPastry{
      * @param port 
      */
     public Node(int port) throws InvalidIPAddressException{
-        this._ip = this._getipaddress();
-        this._port = port;
-        this._nodeID = new NodeId(this._ip+":"+this._port);
+        String ip = this._getipaddress();
+        this._nodeinfo = new NodeInfo(
+                new NodeId(ip+":"+port), ip, port);
         
         this.L = new LeafSet(this);
         this.M = new NeighborhoodSet(this);
@@ -65,7 +63,7 @@ public class Node implements Comparable<Node>, LibPastry{
      * @return String
      */
     public NodeId getID(){
-        return this._nodeID;
+        return this._nodeinfo.getID();
     }
     
     /**
@@ -73,7 +71,15 @@ public class Node implements Comparable<Node>, LibPastry{
      * @return String
      */
     public String getIP(){
-        return this._ip;
+        return this._nodeinfo.getIP();
+    }
+    
+    /**
+     * get node info
+     * @return 
+     */
+    public NodeInfo getNodeInfo(){
+        return this._nodeinfo;
     }
     
     /**
@@ -81,7 +87,7 @@ public class Node implements Comparable<Node>, LibPastry{
      * @return 
      */
     public int getPort(){
-        return this._port;
+        return this._nodeinfo.getPort();
     }
     
     private String _getipaddress(){
@@ -113,12 +119,12 @@ public class Node implements Comparable<Node>, LibPastry{
      * @param n
      * @return int hops
      */
-    public int distance(Node n){
+    public int distance(String IP){
         try {
             String[] cmd = {
             "/bin/sh",
             "-c",
-            "traceroute " + n.getIP() + " | tail -1"
+            "traceroute " + IP + " | tail -1"
             };
             Process proc = Runtime.getRuntime().exec(cmd);
             InputStream in = proc.getInputStream();
@@ -141,7 +147,7 @@ public class Node implements Comparable<Node>, LibPastry{
      */
     @Override
     public int compareTo(Node t) {
-        return t.getID().compareTo(this._nodeID);
+        return t.getID().compareTo(this._nodeinfo.getID());
     }
 
     /**
@@ -151,8 +157,10 @@ public class Node implements Comparable<Node>, LibPastry{
      * @return 
      */
     @Override
-    public NodeId pastryInit(String IP, int Port, Boolean newNet) {
+    public NodeId pastryInit(String IP, int Port, 
+        String RemoteIP, int RemotePort, Boolean newNet) {
         if(newNet){
+            
             //--------------------------------------------
             //start listening on a port
             //--------------------------------------------
@@ -163,9 +171,13 @@ public class Node implements Comparable<Node>, LibPastry{
             //start listening on a port
             //--------------------------------------------
             new Thread(new PeerServer(Port)).start();
-            this.send(new Message("MSG_JOIN"), IP, Port);
+            
+            //--------------------------------------------
+            //send join request
+            //--------------------------------------------
+            this.send(new Message("MSG_JOIN:"+this._nodeinfo.getID()), RemoteIP, RemotePort);
         }
-        return this._nodeID;
+        return this._nodeinfo.getID();
     }
 
     @Override

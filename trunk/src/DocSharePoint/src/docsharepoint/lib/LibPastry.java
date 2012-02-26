@@ -30,7 +30,8 @@ public interface LibPastry {
      * initialize local node
      * @return nodeid
      */
-    public NodeId pastryInit(String IP, int Port, Boolean newNet);
+    public NodeId pastryInit(String IP, int Port, 
+            String RemoteIP, int RemotePort, Boolean newNet);
     
     /**
      * route message

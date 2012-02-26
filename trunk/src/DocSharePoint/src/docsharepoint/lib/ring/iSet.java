@@ -27,7 +27,7 @@ import docsharepoint.lib.NodeId;
  * @author Karpouzas George
  */
 public interface iSet {
-    public void add(Node n);
-    public void remove(Node n);
-    public Node search(NodeId nodeid);
+    public void add(NodeInfo n);
+    public void remove(NodeInfo n);
+    public NodeInfo search(NodeId nodeid);
 }

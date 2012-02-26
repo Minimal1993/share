@@ -28,7 +28,7 @@ import docsharepoint.lib.NodeId;
  * @author Karpouzas George
  */
 public class RoutingTable implements iSet{
-    private Node[][] _rtable;
+    private NodeInfo[][] _rtable;
     private Node _main;
     
     /**
@@ -40,7 +40,7 @@ public class RoutingTable implements iSet{
         //int rows = (int) (Math.log(AppConfig.Instance().getN())/Math.log(4));
         //cols = 2^b-1
         //int cols = (int) (Math.pow(2, AppConfig.Instance().getB()) - 1);
-        this._rtable = new Node[AppConfig.Instance().getN()][AppConfig.Instance().getM()];
+        this._rtable = new NodeInfo[AppConfig.Instance().getN()][AppConfig.Instance().getM()];
     }
     
     /**
@@ -48,7 +48,7 @@ public class RoutingTable implements iSet{
      * @param n 
      */
     @Override
-    public void add(Node n){
+    public void add(NodeInfo n){
         int length = this._shared_prefix_length(n);
         int row = (length);
         int column = (Integer.parseInt(Character.toString(
@@ -57,7 +57,8 @@ public class RoutingTable implements iSet{
             this._rtable[row][column] = n;
         }
         else{
-            if ( this._main.distance(n) < this._main.distance(this._rtable[row][column]))
+            if ( this._main.distance(n.getIP()) < 
+                    this._main.distance(this._rtable[row][column].getIP()))
                 this._rtable[row][column] = n;
         }
     }
@@ -67,7 +68,7 @@ public class RoutingTable implements iSet{
      * @param n 
      */
     @Override
-    public void remove(Node n){
+    public void remove(NodeInfo n){
         
     }
     
@@ -77,12 +78,12 @@ public class RoutingTable implements iSet{
      * @return 
      */
     @Override
-    public Node search(NodeId nodeid){
-        Node found = null;
+    public NodeInfo search(NodeId nodeid){
+        NodeInfo found = null;
         return found;
     }
     
-    private int _shared_prefix_length(Node n){
+    private int _shared_prefix_length(NodeInfo n){
         String n1 = this._main.getID().toString();
         String n2 = n.getID().toString();
         int length = 0;
