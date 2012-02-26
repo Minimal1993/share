@@ -70,7 +70,7 @@ public class PeerServer extends Thread{
                 // -----------------------------------------------------------
                 // start connection listener
                 // -----------------------------------------------------------
-                new ConnectionListener(this, client).start();
+                new MessageListener(this, client).start();
             }
             
             

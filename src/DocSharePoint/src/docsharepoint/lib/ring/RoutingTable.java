@@ -22,7 +22,6 @@ package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
 import docsharepoint.lib.NodeId;
-import java.math.BigInteger;
 
 /**
  * represents node's routing table
@@ -50,7 +49,17 @@ public class RoutingTable implements iSet{
      */
     @Override
     public void add(Node n){
-        
+        int length = this._shared_prefix_length(n);
+        int row = (length);
+        int column = (Integer.parseInt(Character.toString(
+                this._main.getID().toString().charAt(row))));
+        if (this._rtable[row][column]==null){
+            this._rtable[row][column] = n;
+        }
+        else{
+            if ( this._main.distance(n) < this._main.distance(this._rtable[row][column]))
+                this._rtable[row][column] = n;
+        }
     }
     
     /**
@@ -71,5 +80,18 @@ public class RoutingTable implements iSet{
     public Node search(NodeId nodeid){
         Node found = null;
         return found;
+    }
+    
+    private int _shared_prefix_length(Node n){
+        String n1 = this._main.getID().toString();
+        String n2 = n.getID().toString();
+        int length = 0;
+              
+        for (int i=0 ; i<64 ; i++){
+            if ( n1.charAt(i) == n2.charAt(i) )
+                length++;
+            else break;
+        }
+        return length;
     }
 }

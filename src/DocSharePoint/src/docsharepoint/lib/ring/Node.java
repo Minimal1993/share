@@ -23,6 +23,7 @@ package docsharepoint.lib.ring;
 import docsharepoint.lib.LibPastry;
 import docsharepoint.lib.Message;
 import docsharepoint.lib.NodeId;
+import docsharepoint.lib.network.Messenger;
 import docsharepoint.lib.network.PeerServer;
 import docsharepoint.ui.Exceptions.InvalidIPAddressException;
 import java.io.IOException;
@@ -55,8 +56,8 @@ public class Node implements Comparable<Node>, LibPastry{
         this._nodeID = new NodeId(this._ip+":"+this._port);
         
         this.L = new LeafSet(this);
+        this.M = new NeighborhoodSet(this);
         this.R = new RoutingTable(this);
-        this.M = new NeighborhoodSet();
     }
     
     /**
@@ -150,8 +151,20 @@ public class Node implements Comparable<Node>, LibPastry{
      * @return 
      */
     @Override
-    public NodeId pastryInit(String IP, int Port) {
-        new Thread(new PeerServer(Port)).start();
+    public NodeId pastryInit(String IP, int Port, Boolean newNet) {
+        if(newNet){
+            //--------------------------------------------
+            //start listening on a port
+            //--------------------------------------------
+            new Thread(new PeerServer(Port)).start();
+        }
+        else{
+            //--------------------------------------------
+            //start listening on a port
+            //--------------------------------------------
+            new Thread(new PeerServer(Port)).start();
+            this.send(new Message("MSG_JOIN"), IP, Port);
+        }
         return this._nodeID;
     }
 
@@ -160,8 +173,14 @@ public class Node implements Comparable<Node>, LibPastry{
         throw new UnsupportedOperationException("Not supported yet.");
     }
 
+    /**
+     * send message to specific node
+     * @param msg
+     * @param IP
+     * @param Port 
+     */
     @Override
-    public void send(Message msg, String IP) {
-        throw new UnsupportedOperationException("Not supported yet.");
+    public void send(Message msg, String IP, int Port) {
+        new Thread(new Messenger(IP, Port, msg)).start();
     }
 }

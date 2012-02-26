@@ -30,7 +30,7 @@ public interface LibPastry {
      * initialize local node
      * @return nodeid
      */
-    public NodeId pastryInit(String IP, int Port);
+    public NodeId pastryInit(String IP, int Port, Boolean newNet);
     
     /**
      * route message
@@ -44,5 +44,5 @@ public interface LibPastry {
      * @param msg
      * @param IP 
      */
-    public void send(Message msg, String IP);
+    public void send(Message msg, String IP, int Port);
 }
