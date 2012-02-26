@@ -22,13 +22,12 @@ package docsharepoint.lib.ring;
 
 import docsharepoint.lib.LibPastry;
 import docsharepoint.lib.Message;
-import docsharepoint.lib.helpers.SHA1Helper;
+import docsharepoint.lib.NodeId;
 import docsharepoint.lib.network.PeerServer;
 import docsharepoint.ui.Exceptions.InvalidIPAddressException;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
-import java.math.BigInteger;
 import java.net.InetAddress;
 import java.net.NetworkInterface;
 import java.net.SocketException;
@@ -39,7 +38,7 @@ import java.util.Enumeration;
  * @author Karpouzas George
  */
 public class Node implements Comparable<Node>, LibPastry{
-    private BigInteger _nodeID;
+    private NodeId _nodeID;
     private String _ip;
     private int _port;
     public LeafSet L;
@@ -53,7 +52,7 @@ public class Node implements Comparable<Node>, LibPastry{
     public Node(int port) throws InvalidIPAddressException{
         this._ip = this._getipaddress();
         this._port = port;
-        this._nodeID = this._generateID();
+        this._nodeID = new NodeId(this._ip+":"+this._port);
         
         this.L = new LeafSet(this);
         this.R = new RoutingTable(this);
@@ -64,7 +63,7 @@ public class Node implements Comparable<Node>, LibPastry{
      * get node id
      * @return String
      */
-    public BigInteger getID(){
+    public NodeId getID(){
         return this._nodeID;
     }
     
@@ -106,12 +105,6 @@ public class Node implements Comparable<Node>, LibPastry{
         } catch (SocketException ex) {
             return ipaddress;
         }
-    }
-    
-    private BigInteger _generateID() throws InvalidIPAddressException{
-        if(this._ip.isEmpty())
-            throw new InvalidIPAddressException();
-        return SHA1Helper.Instance().hash(this._ip);
     }
     
     /**
@@ -157,13 +150,13 @@ public class Node implements Comparable<Node>, LibPastry{
      * @return 
      */
     @Override
-    public BigInteger pastryInit(String IP, int Port) {
+    public NodeId pastryInit(String IP, int Port) {
         new Thread(new PeerServer(Port)).start();
         return this._nodeID;
     }
 
     @Override
-    public void route(Message msg, BigInteger key) {
+    public void route(Message msg, NodeId key) {
         throw new UnsupportedOperationException("Not supported yet.");
     }
 

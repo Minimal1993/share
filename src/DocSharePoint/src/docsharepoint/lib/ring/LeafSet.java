@@ -21,7 +21,7 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
-import java.math.BigInteger;
+import docsharepoint.lib.NodeId;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -52,16 +52,17 @@ public class LeafSet implements iSet{
     @Override
     public void add(Node n){
         if(n.compareTo(this._main)==0) return;
-        if(n.compareTo(this._main)<0 && this._smaller.size() < 
-                AppConfig.Instance().getL()/2) {
+        if(n.compareTo(this._main)<0){
+            if(this._smaller.size() == AppConfig.Instance().getL()/2)
+                this._removeSmallest();
             this._smaller.add(n);
             Collections.sort(this._smaller);
         }
         else{
-            if(this._bigger.size() < AppConfig.Instance().getL()/2){
-                this._bigger.add(n);
-                Collections.sort(this._bigger);
-            }
+            if(this._bigger.size() < AppConfig.Instance().getL()/2)
+                this._removeBiggest();
+            this._bigger.add(n);
+            Collections.sort(this._bigger);
         }
     }
     
@@ -71,7 +72,9 @@ public class LeafSet implements iSet{
      */
     @Override
     public void remove(Node n){
+        //try to remove from list of smaller nodes
         this._smaller.remove(n);
+        //try to remove from list of bigger nodes
         this._bigger.remove(n);
     }
     
@@ -81,7 +84,7 @@ public class LeafSet implements iSet{
      * @return 
      */
     @Override
-    public Node search(BigInteger nodeid){
+    public Node search(NodeId nodeid){
         Node found = null;
         if(nodeid.compareTo(this._main.getID())==0)return this._main;
         if(nodeid.compareTo(this._main.getID())<0){
@@ -105,5 +108,17 @@ public class LeafSet implements iSet{
             }
         }
         return found;
+    }
+    
+    private void _removeSmallest(){
+        //list is already sorted in ascending order
+        //so just remove the first element
+        this._smaller.remove(0);
+    }
+    
+    private void _removeBiggest(){
+        //list is already sorted in ascending order
+        //so just remove the first element
+        this._bigger.remove(this._bigger.size()-1);
     }
 }

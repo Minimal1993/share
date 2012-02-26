@@ -22,13 +22,12 @@
 package docsharepoint.ui.events;
 
 import docsharepoint.AppConfig;
-import docsharepoint.lib.LibPastry;
+import docsharepoint.lib.NodeId;
 import docsharepoint.lib.ring.Node;
 import docsharepoint.ui.Exceptions.InvalidIPAddressException;
 import docsharepoint.ui.components.Button;
 import docsharepoint.ui.panels.ConnectPanel;
 import java.awt.event.ActionEvent;
-import java.math.BigInteger;
 
 /**
  * connection event
@@ -56,7 +55,7 @@ public class ConnectEvent implements ClickEvent {
         if(but.getText().compareTo("Connect")==0) {
             if(!cp.getBootHost().isEmpty() && cp.getBootPort()!=-1){
                 Node n;
-                BigInteger nodeid = null;
+                NodeId nodeid = null;
                 
                 //-------------------------------------------------------
                 // create new node locally to join a pastry network or

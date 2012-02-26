@@ -20,8 +20,6 @@
  */
 package docsharepoint.lib;
 
-import java.math.BigInteger;
-
 /**
  * represents the pastry lib
  * @author Karpouzas George
@@ -32,14 +30,14 @@ public interface LibPastry {
      * initialize local node
      * @return nodeid
      */
-    public BigInteger pastryInit(String IP, int Port);
+    public NodeId pastryInit(String IP, int Port);
     
     /**
      * route message
      * @param msg
      * @param key 
      */
-    public void route(Message msg, BigInteger key);
+    public void route(Message msg, NodeId key);
     
     /**
      * send message to specific ip address
