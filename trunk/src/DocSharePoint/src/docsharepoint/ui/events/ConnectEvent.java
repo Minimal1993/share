@@ -63,7 +63,7 @@ public class ConnectEvent implements ClickEvent {
                 //-------------------------------------------------------
                 try{
                     n = new Node(cp.getBootPort());
-                    nodeid = n.pastryInit(cp.getBootHost(), cp.getBootPort());
+                    nodeid = n.pastryInit(cp.getBootHost(), cp.getBootPort(), cp.createNewNetwork());
                 }
                 catch(InvalidIPAddressException ipac){
                     AppConfig.Instance().getReportDialog().LogMessage("Node has been initialized");

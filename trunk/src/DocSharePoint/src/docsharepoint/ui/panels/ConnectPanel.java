@@ -24,6 +24,7 @@ package docsharepoint.ui.panels;
 import docsharepoint.AppConfig;
 import docsharepoint.lib.helpers.MessagingHelper;
 import docsharepoint.ui.components.Button;
+import docsharepoint.ui.components.CheckBox;
 import docsharepoint.ui.components.Label;
 import docsharepoint.ui.components.TextField;
 import docsharepoint.ui.events.Browse4FolderEvent;
@@ -39,16 +40,18 @@ public class ConnectPanel extends AbstractPanel {
     /**.
      * boot host, boot port and bind port labels
      */
-    private Label boothost, bootport, path2saveLabel;
+    private Label boothost, bootport, remotehost, remoteport, path2saveLabel;
     /**.
      * boot host, boot port, bind port
      */
-    private TextField bootHost, bootPort, path2save;
+    private TextField bootHost, bootPort, remoteHost, remotePort, path2save;
     /**.
      * connect button
      */
     private Button connect, browse;
 
+    private CheckBox newnetwork;
+    
     /**.
      * default constructor
      */
@@ -61,9 +64,14 @@ public class ConnectPanel extends AbstractPanel {
      * @param parentsize parent size
      * @return boolean, true on success
      */
+    @Override
     public final boolean init(final Size parentsize) {
         final int second_column_comp_y = 190;
         final int text_fields_width = 180;
+        
+        newnetwork = new CheckBox("Create new Pastry Network?");
+        add(newnetwork);
+        newnetwork.setBounds(10, 10, 260, 20);
         
         connect = new Button("Connect", "Connect with pastry network",
                 new ConnectEvent(this));
@@ -71,12 +79,12 @@ public class ConnectPanel extends AbstractPanel {
             connect.setText("Disconnect");
         }
         add(connect);
-        connect.setBounds(380, 100, 120, 20);
+        connect.setBounds(380, 160, 120, 20);
 
         browse = new Button("...", "Browse for folder",
                 new Browse4FolderEvent());
         add(browse);
-        browse.setBounds(second_column_comp_y-45, 100, 30, 20);
+        browse.setBounds(second_column_comp_y-45, 160, 30, 20);
         
         boothost = new Label("Boot Host");
         add(boothost);
@@ -93,10 +101,26 @@ public class ConnectPanel extends AbstractPanel {
         bootPort = new TextField("9090");
         add(bootPort);
         bootPort.setBounds(second_column_comp_y, 70, text_fields_width, 20);
+        
+        remotehost = new Label("Remote Host");
+        add(remotehost);
+        remotehost.setBounds(10, 100, 160, 20);
+
+        remoteHost = new TextField("localhost");
+        add(remoteHost);
+        remoteHost.setBounds(second_column_comp_y, 100, text_fields_width, 20);
+
+        remoteport = new Label("Remote Port");
+        add(remoteport);
+        remoteport.setBounds(10, 130, 100, 20);
+
+        remotePort = new TextField("9090");
+        add(remotePort);
+        remotePort.setBounds(second_column_comp_y, 130, text_fields_width, 20);
 
         path2saveLabel = new Label("Storage directory");
         add(path2saveLabel);
-        path2saveLabel.setBounds(10, 100, text_fields_width, 20);
+        path2saveLabel.setBounds(10, 160, text_fields_width, 20);
 
         path2save = new TextField(System.getProperty("user.home")+
                 System.getProperty("file.separator")+
@@ -109,7 +133,7 @@ public class ConnectPanel extends AbstractPanel {
             MessagingHelper.PrintError2Console(ex.toString());
         }
         add(path2save);
-        path2save.setBounds(second_column_comp_y, 100, text_fields_width, 20);
+        path2save.setBounds(second_column_comp_y, 160, text_fields_width, 20);
         
         return true;
     }
@@ -134,6 +158,27 @@ public class ConnectPanel extends AbstractPanel {
             return -1;
         }
     }
+    
+    /**
+     * get remote host
+     * @return 
+     */
+    public String getRemoteHost(){
+        return remoteHost.getText();
+    }
+    
+    /**
+     * get remote port
+     * @return 
+     */
+    public int getRemotePort(){
+        try{
+            return Integer.parseInt(remotePort.getText());
+        }
+        catch(Exception ex){
+            return -1;
+        }
+    }
 
     /**
      * set boot host value
@@ -151,6 +196,13 @@ public class ConnectPanel extends AbstractPanel {
         bootPort.setText(value+"");
     }
 
+    /**
+     * create new pastry network?
+     */
+    public Boolean createNewNetwork(){
+        return newnetwork.isSelected();
+    }
+    
     /**
      * get path
      * @return String

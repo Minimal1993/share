@@ -23,7 +23,6 @@ package docsharepoint.lib.network;
 
 import docsharepoint.AppConfig;
 import docsharepoint.lib.Message;
-import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -35,12 +34,11 @@ import java.net.UnknownHostException;
  * connect to the chat server of another peer
  * @author developer
  */
-public class PeerClient implements Runnable{
+public class Messenger implements Runnable{
     private Socket _socket;
     private String _host;
     private int _port;
     private DataOutputStream _output;
-    private DataInputStream _input;
     private Message _msg;
     
     /**
@@ -48,7 +46,7 @@ public class PeerClient implements Runnable{
      * @param host
      * @param port 
      */
-    public PeerClient(String host, int port, Message msg){
+    public Messenger(String host, int port, Message msg){
         
         // -----------------------------------------------------------
         // init
@@ -69,18 +67,12 @@ public class PeerClient implements Runnable{
             // connect to server
             // -----------------------------------------------------------
             this._socket = new Socket(this._host, this._port);            
-            AppConfig.Instance().getReportDialog().LogMessage("Connected to pastry network.");
+            AppConfig.Instance().getReportDialog().LogMessage("Connected to peer..");
             
             // -----------------------------------------------------------
             // get output stream
             // -----------------------------------------------------------
             this._output = new DataOutputStream(this._socket.getOutputStream());
-            
-            
-            // -----------------------------------------------------------
-            // get input stream
-            // -----------------------------------------------------------
-            this._input = new DataInputStream(this._socket.getInputStream());
             
             try {
                 this._output.writeUTF(this._msg.getMessage());
@@ -88,20 +80,13 @@ public class PeerClient implements Runnable{
             } catch (IOException ex) {
                 AppConfig.Instance().getReportDialog().LogMessage("Error: Sending message to the server.");
             }
-              
+            
+            this._socket.close();
+            
         } catch (UnknownHostException ex) {
             AppConfig.Instance().getReportDialog().LogMessage("Error: Unable to connect to the server.");
         } catch (IOException ex) {
             AppConfig.Instance().getReportDialog().LogMessage("Error: Unable to connect to the server.");
         }
-    }
-    
-    /**
-     * disconnect from server
-     */
-    public void disconnect(){
-        try {
-            this._socket.close();
-        } catch (IOException ex) {}
     }
 }

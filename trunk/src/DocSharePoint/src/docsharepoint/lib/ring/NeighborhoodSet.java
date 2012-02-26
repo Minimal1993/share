@@ -22,7 +22,6 @@ package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
 import docsharepoint.lib.NodeId;
-import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Iterator;
@@ -33,13 +32,15 @@ import java.util.Iterator;
  */
 public class NeighborhoodSet implements iSet{
     private ArrayList<Node> _list;
+    private Node _main;
     
     /**
      * constructor
      * @param main 
      */
-    public NeighborhoodSet(){
+    public NeighborhoodSet(Node main){
         this._list = new ArrayList<>();
+        this._main = main;
     }
     
     /**
@@ -48,10 +49,11 @@ public class NeighborhoodSet implements iSet{
      */
     @Override
     public void add(Node n){
-        if(this._list.size() < AppConfig.Instance().getM()) {
+        if(this._list.size() == AppConfig.Instance().getM())
+            this._replaceBiggest(n);
+        else
             this._list.add(n);
-            Collections.sort(this._list);
-        }
+        Collections.sort(this._list);
     }
     
     /**
@@ -80,5 +82,13 @@ public class NeighborhoodSet implements iSet{
             }
         }
         return found;
+    }
+    
+    private void _replaceBiggest(Node n){
+        //the set is already sorted so just remove the last element if n is nearer
+        if ( this._main.distance(n) < this._main.distance(this._list.get(this._list.size()-1))){
+            this._list.remove(this._list.size()-1);
+            this._list.add(n);
+        }
     }
 }

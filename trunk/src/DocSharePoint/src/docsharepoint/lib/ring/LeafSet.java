@@ -54,14 +54,16 @@ public class LeafSet implements iSet{
         if(n.compareTo(this._main)==0) return;
         if(n.compareTo(this._main)<0){
             if(this._smaller.size() == AppConfig.Instance().getL()/2)
-                this._removeSmallest();
-            this._smaller.add(n);
+                this._replaceSmallest(n);
+            else
+                this._smaller.add(n);
             Collections.sort(this._smaller);
         }
         else{
             if(this._bigger.size() < AppConfig.Instance().getL()/2)
-                this._removeBiggest();
-            this._bigger.add(n);
+                this._replaceBiggest(n);
+            else
+                this._bigger.add(n);
             Collections.sort(this._bigger);
         }
     }
@@ -110,15 +112,21 @@ public class LeafSet implements iSet{
         return found;
     }
     
-    private void _removeSmallest(){
-        //list is already sorted in ascending order
-        //so just remove the first element
-        this._smaller.remove(0);
+    private void _replaceSmallest(Node n){
+        //check if n has bigger key
+        //smaller list is sorted in ascending order 
+        //so the item(0) has the smallest key
+        if(n.compareTo(this._smaller.get(0))>0){
+            this._smaller.remove(0);
+            this._smaller.add(n);
+        }
     }
     
-    private void _removeBiggest(){
-        //list is already sorted in ascending order
-        //so just remove the first element
-        this._bigger.remove(this._bigger.size()-1);
+    private void _replaceBiggest(Node n){
+        //check if n has smaller key
+        if(n.compareTo(this._bigger.get(this._bigger.size()-1))<0){
+            this._bigger.remove(this._bigger.size()-1);
+            this._bigger.add(n);
+        }
     }
 }
