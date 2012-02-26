@@ -21,6 +21,7 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
+import docsharepoint.lib.NodeId;
 import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -68,7 +69,7 @@ public class NeighborhoodSet implements iSet{
      * @return 
      */
     @Override
-    public Node search(BigInteger nodeid){
+    public Node search(NodeId nodeid){
         Node found = null;
         Iterator<Node> iter = this._list.iterator();
         while(iter.hasNext()){

@@ -21,7 +21,6 @@
 package docsharepoint.lib.network;
 
 import docsharepoint.lib.Message;
-import docsharepoint.lib.helpers.SHA1Helper;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -63,8 +62,8 @@ public class ConnectionListener extends Thread{
                 // -----------------------------------------------------------
                 // read client's message
                 // -----------------------------------------------------------
-                deliver(new Message(inputfromclient.readUTF()), 
-                        SHA1Helper.Instance().hash(this._clientsocket.getInetAddress().toString().replace("/", "")));
+                //deliver(new Message(inputfromclient.readUTF()), 
+                //        SHA1Helper.Instance().hash(this._clientsocket.getInetAddress().toString().replace("/", "")));
             }
             
         } catch (IOException ex) {}

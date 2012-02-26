@@ -20,7 +20,7 @@
  */
 package docsharepoint.lib.ring;
 
-import java.math.BigInteger;
+import docsharepoint.lib.NodeId;
 
 /**
  * interface all sets must implement
@@ -29,5 +29,5 @@ import java.math.BigInteger;
 public interface iSet {
     public void add(Node n);
     public void remove(Node n);
-    public Node search(BigInteger nodeid);
+    public Node search(NodeId nodeid);
 }

@@ -21,6 +21,7 @@
 package docsharepoint.lib.ring;
 
 import docsharepoint.AppConfig;
+import docsharepoint.lib.NodeId;
 import java.math.BigInteger;
 
 /**
@@ -67,7 +68,7 @@ public class RoutingTable implements iSet{
      * @return 
      */
     @Override
-    public Node search(BigInteger nodeid){
+    public Node search(NodeId nodeid){
         Node found = null;
         return found;
     }
