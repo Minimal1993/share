@@ -18,42 +18,60 @@
  *  You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-package docsharepoint.lib;
+package docsharepoint.lib.ring;
+
+import docsharepoint.lib.NodeId;
 
 /**
- * represents a message
- * @author George Karpouzas
+ * represents a set item (nodeid, ip, port)
+ * @author developer
  */
-public class Message {
-    private String _message;
+public class NodeInfo implements Comparable<NodeInfo>{
+    private NodeId _nodeid;
+    private String _ip;
+    private int _port;
     
     /**
-     * constructor specifying message
-     * @param value 
+     * constructor specifying nodeid, ip and port
+     * @param nodeid
+     * @param IP
+     * @param Port 
      */
-    public Message(String value){
-        this._message = value;
+    public NodeInfo(NodeId nodeid, String IP, int Port){
+        this._nodeid = nodeid;
+        this._ip = IP;
+        this._port = Port;
     }
     
     /**
-     * get message
-     */
-    public String getMessage(){
-        return this._message;
-    }
-    
-    /**
-     * get Message Type
+     * get ip
      * @return 
      */
-    public String getMessageType(){
-        return this._message.split(":")[0];
+    public String getIP(){
+        return this._ip;
     }
     
     /**
-     * get Node ID
+     * get port
      */
-    public String getNodeId(){
-        return this._message.split(":")[1];
+    public int getPort(){
+        return this._port;
+    }
+    
+    /**
+     * get node id
+     */
+    public NodeId getID(){
+        return this._nodeid;
+    }
+
+    /**
+     * nodeinfo's nodeids
+     * @param arg0
+     * @return 
+     */
+    @Override
+    public int compareTo(NodeInfo arg0) {
+        return this._nodeid.compareTo(arg0.getID());
     }
 }

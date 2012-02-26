@@ -22,6 +22,8 @@ package docsharepoint.lib.network;
 
 import docsharepoint.AppConfig;
 import docsharepoint.lib.Message;
+import docsharepoint.lib.NodeId;
+import docsharepoint.lib.ring.NodeInfo;
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.math.BigInteger;
@@ -63,9 +65,22 @@ public class MessageListener extends Thread{
                 // -----------------------------------------------------------
                 // read client's message
                 // -----------------------------------------------------------
-                //deliver(new Message(inputfromclient.readUTF()), 
-                //        SHA1Helper.Instance().hash(this._clientsocket.getInetAddress().toString().replace("/", "")));
-                AppConfig.Instance().getReportDialog().LogMessage(inputfromclient.readUTF());
+                Message msg = new Message(inputfromclient.readUTF());
+                
+                switch(msg.getMessageType()){
+                    case "MSG_JOIN":
+                        NodeId n = new NodeId();
+                        n.setKey(msg.getNodeId());
+                        NodeInfo ni = new NodeInfo(n, 
+                                this._clientsocket.getInetAddress().toString().replace("/", ""), 
+                                this._clientsocket.getPort());
+                        System.out.println(AppConfig.Instance().localNode.L==null);
+                        AppConfig.Instance().localNode.L.add(ni);
+                        AppConfig.Instance().localNode.M.add(ni);
+                        AppConfig.Instance().localNode.R.add(ni);
+                        break;
+                }
+                AppConfig.Instance().getReportDialog().LogMessage("Message received: "+msg.getMessage());
             }
             
         } catch (IOException ex) {}
@@ -76,7 +91,7 @@ public class MessageListener extends Thread{
      * @param msg
      * @param key 
      */
-    public void deliver(Message msg, BigInteger key){
+    public void deliver(Message msg, NodeId key){
         
     }
 }

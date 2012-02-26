@@ -53,23 +53,23 @@ public class ConnectEvent implements ClickEvent {
         Object obj = e.getSource();
         Button but = (Button) obj;
         if(but.getText().compareTo("Connect")==0) {
-            if(!cp.getBootHost().isEmpty() && cp.getBootPort()!=-1){
-                Node n;
-                NodeId nodeid = null;
-                
+            if(!cp.getBootHost().isEmpty() && cp.getBootPort()!=-1){                
                 //-------------------------------------------------------
                 // create new node locally to join a pastry network or
                 // create a new pastry network
                 //-------------------------------------------------------
                 try{
-                    n = new Node(cp.getBootPort());
-                    nodeid = n.pastryInit(cp.getBootHost(), cp.getBootPort(), cp.createNewNetwork());
+                    AppConfig.Instance().localNode = new Node(cp.getBootPort());
+                    AppConfig.Instance().localNode.pastryInit(cp.getBootHost(), 
+                            cp.getBootPort(), cp.getRemoteHost(), 
+                            cp.getRemotePort(), cp.createNewNetwork());
                 }
                 catch(InvalidIPAddressException ipac){
                     AppConfig.Instance().getReportDialog().LogMessage("Node has been initialized");
                 }
                 
-                AppConfig.Instance().getReportDialog().LogMessage("Node ID + " + nodeid);
+                AppConfig.Instance().getReportDialog().LogMessage("Node ID + " + 
+                        AppConfig.Instance().localNode.getID());
                 AppConfig.Instance().setConnected(true);
                 but.setText("Disconnect");
             }

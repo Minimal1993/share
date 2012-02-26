@@ -32,7 +32,7 @@ import java.util.List;
  * @author Karpouzas George
  */
 public class LeafSet implements iSet{
-    private List<Node> _smaller, _bigger;
+    private List<NodeInfo> _smaller, _bigger;
     private Node _main;
     
     /**
@@ -50,9 +50,9 @@ public class LeafSet implements iSet{
      * @param n 
      */
     @Override
-    public void add(Node n){
-        if(n.compareTo(this._main)==0) return;
-        if(n.compareTo(this._main)<0){
+    public void add(NodeInfo n){
+        if(n.getID().compareTo(this._main.getID())==0) return;
+        if(n.getID().compareTo(this._main.getID())<0){
             if(this._smaller.size() == AppConfig.Instance().getL()/2)
                 this._replaceSmallest(n);
             else
@@ -73,7 +73,7 @@ public class LeafSet implements iSet{
      * @param n 
      */
     @Override
-    public void remove(Node n){
+    public void remove(NodeInfo n){
         //try to remove from list of smaller nodes
         this._smaller.remove(n);
         //try to remove from list of bigger nodes
@@ -86,13 +86,14 @@ public class LeafSet implements iSet{
      * @return 
      */
     @Override
-    public Node search(NodeId nodeid){
-        Node found = null;
-        if(nodeid.compareTo(this._main.getID())==0)return this._main;
+    public NodeInfo search(NodeId nodeid){
+        NodeInfo found = null;
+        if(nodeid.compareTo(this._main.getID())==0)
+            return this._main.getNodeInfo();
         if(nodeid.compareTo(this._main.getID())<0){
-            Iterator<Node> iter = this._smaller.iterator();
+            Iterator<NodeInfo> iter = this._smaller.iterator();
             while(iter.hasNext()){
-                Node item = iter.next();
+                NodeInfo item = iter.next();
                 if(item.getID().compareTo(nodeid)==0){
                     found = item;
                     break;
@@ -100,9 +101,9 @@ public class LeafSet implements iSet{
             }
         }
         else{
-            Iterator<Node> iter = this._bigger.iterator();
+            Iterator<NodeInfo> iter = this._bigger.iterator();
             while(iter.hasNext()){
-                Node item = iter.next();
+                NodeInfo item = iter.next();
                 if(item.getID().compareTo(nodeid)==0){
                     found = item;
                     break;
@@ -112,7 +113,7 @@ public class LeafSet implements iSet{
         return found;
     }
     
-    private void _replaceSmallest(Node n){
+    private void _replaceSmallest(NodeInfo n){
         //check if n has bigger key
         //smaller list is sorted in ascending order 
         //so the item(0) has the smallest key
@@ -122,7 +123,7 @@ public class LeafSet implements iSet{
         }
     }
     
-    private void _replaceBiggest(Node n){
+    private void _replaceBiggest(NodeInfo n){
         //check if n has smaller key
         if(n.compareTo(this._bigger.get(this._bigger.size()-1))<0){
             this._bigger.remove(this._bigger.size()-1);

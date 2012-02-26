@@ -33,6 +33,13 @@ public class NodeId implements Comparable<NodeId>{
     private String _keystr;
     
     /**
+     * default constructor
+     */
+    public NodeId(){
+        
+    }
+    
+    /**
      * constructor specifying ip:port or object name
      * @param plainText 
      */
@@ -75,6 +82,16 @@ public class NodeId implements Comparable<NodeId>{
      */
     public byte[] getKey(){
         return this._key;
+    }
+    
+    /**
+     * set key
+     * @param value 
+     */
+    public void setKey(String value){
+        this._keystr = value;
+        BigInteger big = new BigInteger(value);
+        this._key = big.toByteArray();
     }
     
     /**
