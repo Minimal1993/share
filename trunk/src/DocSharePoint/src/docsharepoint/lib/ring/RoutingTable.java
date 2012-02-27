@@ -74,7 +74,7 @@ public class RoutingTable implements iSet{
     /**
      * search for a nodeid
      * @param nodeid
-     * @return 
+     * @return NodeInfo
      */
     @Override
     public NodeInfo search(NodeId nodeid){

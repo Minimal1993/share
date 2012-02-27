@@ -76,7 +76,7 @@ public class Node implements Comparable<Node>, LibPastry{
     
     /**
      * get node info
-     * @return 
+     * @return NoeInfo
      */
     public NodeInfo getNodeInfo(){
         return this._nodeinfo;
@@ -84,7 +84,7 @@ public class Node implements Comparable<Node>, LibPastry{
     
     /**
      * get port number
-     * @return 
+     * @return int
      */
     public int getPort(){
         return this._nodeinfo.getPort();
@@ -116,7 +116,7 @@ public class Node implements Comparable<Node>, LibPastry{
     
     /**
      * calculate distance between nodes
-     * @param n
+     * @param IP
      * @return int hops
      */
     public int distance(String IP){
@@ -143,7 +143,7 @@ public class Node implements Comparable<Node>, LibPastry{
     /**
      * compare nodes
      * @param t
-     * @return 
+     * @return int
      */
     @Override
     public int compareTo(Node t) {
@@ -154,7 +154,7 @@ public class Node implements Comparable<Node>, LibPastry{
      * initialize pastry new or join
      * @param IP
      * @param Port
-     * @return 
+     * @return NodeId
      */
     @Override
     public NodeId pastryInit(String IP, int Port, 
@@ -180,6 +180,11 @@ public class Node implements Comparable<Node>, LibPastry{
         return this._nodeinfo.getID();
     }
 
+    /**
+     * 
+     * @param msg
+     * @param key 
+     */
     @Override
     public void route(Message msg, NodeId key) {
         throw new UnsupportedOperationException("Not supported yet.");

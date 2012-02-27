@@ -47,11 +47,11 @@ public class Button extends JButton implements IComponent {
         addActionListener(clickevent);
     }
     
-    /**.
-     * constructor specifying title, tooltip and click event
-     * @param title component title
-     * @param tooltip component tooltip text
-     * @param ActionListener action
+    /**
+     * 
+     * @param title
+     * @param tooltip
+     * @param clickevent 
      */
     public Button(final String title,
             final String tooltip, ActionListener clickevent) {

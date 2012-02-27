@@ -82,9 +82,9 @@ public class LeafSet implements iSet{
     }
     
     /**
-     * search for given nodeid
+     * 
      * @param nodeid
-     * @return 
+     * @return NodeInfo
      */
     @Override
     public NodeInfo search(NodeId nodeid){
