@@ -110,13 +110,4 @@ public class MessageListener extends Thread{
             
         } catch (IOException ex) {}
     }
-    
-    /**
-     * deliver message
-     * @param msg
-     * @param key 
-     */
-    public void deliver(Message msg, NodeId key){
-        
-    }
 }

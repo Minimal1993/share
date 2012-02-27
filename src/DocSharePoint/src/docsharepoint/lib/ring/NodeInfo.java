@@ -45,7 +45,7 @@ public class NodeInfo implements Comparable<NodeInfo>{
     
     /**
      * get ip
-     * @return 
+     * @return String
      */
     public String getIP(){
         return this._ip;
@@ -53,6 +53,7 @@ public class NodeInfo implements Comparable<NodeInfo>{
     
     /**
      * get port
+     * @return int
      */
     public int getPort(){
         return this._port;
@@ -60,6 +61,7 @@ public class NodeInfo implements Comparable<NodeInfo>{
     
     /**
      * get node id
+     * @return NodeId
      */
     public NodeId getID(){
         return this._nodeid;
@@ -68,7 +70,7 @@ public class NodeInfo implements Comparable<NodeInfo>{
     /**
      * nodeinfo's nodeids
      * @param arg0
-     * @return 
+     * @return int
      */
     @Override
     public int compareTo(NodeInfo arg0) {

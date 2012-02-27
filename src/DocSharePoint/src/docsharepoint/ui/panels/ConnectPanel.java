@@ -161,7 +161,7 @@ public class ConnectPanel extends AbstractPanel {
     
     /**
      * get remote host
-     * @return 
+     * @return String
      */
     public String getRemoteHost(){
         return remoteHost.getText();
@@ -169,7 +169,7 @@ public class ConnectPanel extends AbstractPanel {
     
     /**
      * get remote port
-     * @return 
+     * @return int
      */
     public int getRemotePort(){
         try{

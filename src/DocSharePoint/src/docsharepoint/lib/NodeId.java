@@ -97,7 +97,7 @@ public class NodeId implements Comparable<NodeId>{
     
     /**
      * get biginteger representation of the key
-     * @return 
+     * @return BigInteger
      */
     public BigInteger toBigInteger(){
         return new BigInteger(1, this._key);
@@ -115,7 +115,7 @@ public class NodeId implements Comparable<NodeId>{
     /**
      * 
      * @param arg0
-     * @return 
+     * @return int
      */
     @Override
     public int compareTo(NodeId arg0) {

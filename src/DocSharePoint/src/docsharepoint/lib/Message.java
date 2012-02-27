@@ -44,7 +44,7 @@ public class Message {
     
     /**
      * get Message Type
-     * @return 
+     * @return String
      */
     public String getMessageType(){
         return this._message.split(":")[0];

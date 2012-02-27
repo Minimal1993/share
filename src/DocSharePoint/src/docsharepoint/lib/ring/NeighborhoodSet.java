@@ -68,7 +68,7 @@ public class NeighborhoodSet implements iSet{
     /**
      * search for give nodeid
      * @param nodeid
-     * @return 
+     * @return NodeInfo
      */
     @Override
     public NodeInfo search(NodeId nodeid){
