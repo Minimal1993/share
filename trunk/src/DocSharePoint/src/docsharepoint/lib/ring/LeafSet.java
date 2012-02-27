@@ -51,8 +51,6 @@ public class LeafSet implements iSet{
      */
     @Override
     public void add(NodeInfo n){
-        if(n==null)System.err.println("n is null");
-        if(this._main==null)System.err.println("main is null");
         if(n.getID().compareTo(this._main.getID())==0) return;
         
         if(n.getID().compareTo(this._main.getID())<0){
