@@ -49,8 +49,7 @@ public class RoutingTable implements iSet{
      */
     @Override
     public void add(NodeInfo n){
-        int length = this._shared_prefix_length(n);
-        int row = (length);
+        int row = this._shared_prefix_length(n)-1;
         int column = (Integer.parseInt(Character.toString(
                 this._main.getID().toString().charAt(row))));
         if (this._rtable[row][column]==null){
@@ -88,7 +87,7 @@ public class RoutingTable implements iSet{
         String n2 = n.getID().toString();
         int length = 0;
               
-        for (int i=0 ; i<64 ; i++){
+        for (int i=0 ; i<32 ; i++){
             if ( n1.charAt(i) == n2.charAt(i) )
                 length++;
             else break;

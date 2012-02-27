@@ -51,7 +51,10 @@ public class LeafSet implements iSet{
      */
     @Override
     public void add(NodeInfo n){
+        if(n==null)System.err.println("n is null");
+        if(this._main==null)System.err.println("main is null");
         if(n.getID().compareTo(this._main.getID())==0) return;
+        
         if(n.getID().compareTo(this._main.getID())<0){
             if(this._smaller.size() == AppConfig.Instance().getL()/2)
                 this._replaceSmallest(n);
@@ -60,7 +63,7 @@ public class LeafSet implements iSet{
             Collections.sort(this._smaller);
         }
         else{
-            if(this._bigger.size() < AppConfig.Instance().getL()/2)
+            if(this._bigger.size() == AppConfig.Instance().getL()/2)
                 this._replaceBiggest(n);
             else
                 this._bigger.add(n);
