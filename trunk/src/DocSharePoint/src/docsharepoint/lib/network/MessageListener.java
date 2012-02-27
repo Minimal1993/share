@@ -74,7 +74,7 @@ public class MessageListener extends Thread{
                         NodeInfo ni = new NodeInfo(n, 
                                 this._clientsocket.getInetAddress().toString().replace("/", ""), 
                                 this._clientsocket.getPort());
-                        System.out.println(AppConfig.Instance().localNode.L==null);
+
                         AppConfig.Instance().localNode.L.add(ni);
                         AppConfig.Instance().localNode.M.add(ni);
                         AppConfig.Instance().localNode.R.add(ni);

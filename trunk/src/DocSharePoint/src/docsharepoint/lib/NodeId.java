@@ -36,7 +36,8 @@ public class NodeId implements Comparable<NodeId>{
      * default constructor
      */
     public NodeId(){
-        
+        this._key = new byte[16];
+        this._keystr = "";
     }
     
     /**
@@ -51,17 +52,17 @@ public class NodeId implements Comparable<NodeId>{
             MessageDigest md = MessageDigest.getInstance("SHA1");
             md.update(plainText.getBytes()); 
             byte[] output = md.digest();
-            byte[] key = new byte[16];
+            this._key = new byte[16];
             
             //------------------------------------------------------
             //keep only 16 bytes
             //------------------------------------------------------
-            System.arraycopy(output, 0, key, 0, 16);
+            System.arraycopy(output, 0, this._key, 0, 16);
             
             //------------------------------------------------------
             //convert byte array to a positive big integer
             //------------------------------------------------------
-            BigInteger ret = new BigInteger(1, key);
+            BigInteger ret = new BigInteger(1, this._key);
             
             //------------------------------------------------------
             //convert biginteger into chars 0-3
@@ -111,6 +112,11 @@ public class NodeId implements Comparable<NodeId>{
         return this._keystr;
     }
 
+    /**
+     * 
+     * @param arg0
+     * @return 
+     */
     @Override
     public int compareTo(NodeId arg0) {
         return this.toBigInteger().compareTo(arg0.toBigInteger());
