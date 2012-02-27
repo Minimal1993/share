@@ -24,8 +24,7 @@ import docsharepoint.AppConfig;
 import docsharepoint.lib.Message;
 import docsharepoint.lib.NodeId;
 import docsharepoint.lib.ring.NodeInfo;
-import java.io.DataInputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 
 /**
@@ -81,6 +80,27 @@ public class MessageListener extends Thread{
                         this._server.sendmessage(AppConfig.Instance().localNode.getID().toString(), _clientsocket);
                         AppConfig.Instance().getReportDialog().LogMessage("JOIN MESSAGE received.");
                         
+                        break;
+                    case "MSG_FILE":
+                        // receive file
+                        byte [] mybytearray  = new byte [1024];
+                        InputStream is = this._clientsocket.getInputStream();
+                        FileOutputStream fos = new FileOutputStream("source-copy.pdf");
+                        BufferedOutputStream bos = new BufferedOutputStream(fos);
+                        int bytesRead = is.read(mybytearray,0,mybytearray.length);
+                        int current = 0;
+                        current = bytesRead;
+                        do {
+                            bytesRead = is.read(mybytearray, current, (mybytearray.length-current));
+                        if(bytesRead >= 0) current += bytesRead;
+                        } while(bytesRead > -1);
+
+                        bos.write(mybytearray, 0 , current);
+                        bos.flush();
+                        long end = System.currentTimeMillis();
+                        
+                        bos.close();
+                        this._clientsocket.close();
                         break;
                     default:
                         AppConfig.Instance().getReportDialog().LogMessage("Message received: "+msg.getMessage());

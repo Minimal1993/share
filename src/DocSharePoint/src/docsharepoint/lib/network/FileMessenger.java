@@ -1,4 +1,3 @@
-
 /*
  *  DocSharePoint
  *  Open Source Distributed p2p system based on pastry
@@ -22,71 +21,54 @@
 package docsharepoint.lib.network;
 
 import docsharepoint.AppConfig;
-import docsharepoint.lib.Message;
-import java.io.DataOutputStream;
-import java.io.IOException;
+import java.io.*;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
 /**
- * represents the peer client
- * this client is running on each peer when the peer want to
- * connect to the chat server of another peer
- * @author developer
+ * sends files
+ * @author George Karpouzas
  */
-public class Messenger implements Runnable{
-    private Socket _socket;
+public class FileMessenger implements Runnable{
+    private  File _file;
     private String _host;
     private int _port;
-    private DataOutputStream _output;
-    private Message _msg;
+    private Socket _socket;
     
     /**
-     * constructor
+     * 
      * @param host
-     * @param port 
+     * @param port
+     * @param file 
      */
-    public Messenger(String host, int port, Message msg){
-        
-        // -----------------------------------------------------------
-        // init
-        // -----------------------------------------------------------
+    public FileMessenger(String host, int port, File file){
+        this._file = file;
         this._host = host;
         this._port = port;
-        this._msg = msg;
     }
     
-    /**
-     * connect to the server
-     */
     @Override
-    public void run(){
+    public void run() {
         try {
             
-            // -----------------------------------------------------------
-            // connect to server
-            // -----------------------------------------------------------
             this._socket = new Socket(this._host, this._port);            
-            AppConfig.Instance().getReportDialog().LogMessage("Connected to peer..");
             
-            // -----------------------------------------------------------
-            // get output stream
-            // -----------------------------------------------------------
-            this._output = new DataOutputStream(this._socket.getOutputStream());
+            byte [] mybytearray  = new byte [(int)this._file.length()];
+            FileInputStream fis = new FileInputStream(this._file);
+            BufferedInputStream bis = new BufferedInputStream(fis);
             
-            try {
-                this._output.writeUTF(this._msg.getMessage());
-            
-            } catch (IOException ex) {
-                AppConfig.Instance().getReportDialog().LogMessage("Error: Sending message to the server.");
-            }
-            
+            bis.read(mybytearray,0,mybytearray.length);
+            OutputStream os = this._socket.getOutputStream();
+            AppConfig.Instance().getReportDialog().LogMessage("Sending file..");
+            os.write(mybytearray,0,mybytearray.length);
+            os.flush();
             this._socket.close();
             
         } catch (UnknownHostException ex) {
             AppConfig.Instance().getReportDialog().LogMessage("Error: Unable to connect to the server.");
-        } catch (IOException ex) {
+        } catch (IOException exe) {
             AppConfig.Instance().getReportDialog().LogMessage("Error: Unable to connect to the server.");
         }
     }
+    
 }

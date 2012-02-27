@@ -50,6 +50,7 @@ public class SharedPanel extends AbstractPanel {
      * @param parentsize parent size
      * @return boolean, true on success
      */
+    @Override
     public final boolean init(final Size parentsize) {
 
         fileNameLabel = new Label("File Name");
@@ -74,17 +75,17 @@ public class SharedPanel extends AbstractPanel {
 
         insFile = new TextField();
         add(insFile);
-        insFile.setBounds(180, 70, 300, 20);
+        insFile.setBounds(180, 70, 200, 20);
 
         browse = new Button("...", "Browse for file",
                 new Browse4FileEvent());
         add(browse);
-        browse.setBounds(500, 70, 40, 20);
+        browse.setBounds(400, 70, 40, 20);
 
         insert = new Button("Upload File", "Upload File to Pastry Nework",
                 new InsertFileEvent(this));
         add(insert);
-        insert.setBounds(600, 70, 120, 20);
+        insert.setBounds(450, 70, 120, 20);
         
         return true;
     }
