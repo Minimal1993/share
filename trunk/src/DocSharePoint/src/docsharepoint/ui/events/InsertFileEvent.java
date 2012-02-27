@@ -21,11 +21,9 @@
 
 package docsharepoint.ui.events;
 
-import docsharepoint.AppConfig;
-import docsharepoint.lib.helpers.MessagingHelper;
+import docsharepoint.lib.network.FileMessenger;
 import docsharepoint.ui.panels.SharedPanel;
 import java.awt.event.ActionEvent;
-import java.io.File;
 
 /**.
  * represents the insert file click event
@@ -47,18 +45,8 @@ public class InsertFileEvent implements ClickEvent {
      * do something
      * @param e action event
      */
+    @Override
     public final void actionPerformed(final ActionEvent e) {
-        /*if(AppConfig.getInstance().isConnected()){
-            fileKey = AppConfig.getInstance().getPastryApp().insert(
-                _panel.getFileNameIdentifier(),
-                _panel.getNumOfReplications(),
-                new File(_panel.getFilePath()));
-            //if(fileKey!=null)
-                //Messaging.ShowMessage("File has been uploaded succesfully", "Upload File");
-            //else
-                //Messaging.ShowErrorMessage("File hasn't been uploaded.", "Upload File");
-        }
-        else
-            Messaging.Print2Console("Not connected to Pastry Network");*/
+        //FileMessenger fmessenger = new FileMessenger(host, port, filename);
     }
 }
