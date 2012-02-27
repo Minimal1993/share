@@ -21,6 +21,7 @@
 package docsharepoint.lib.network;
 
 import docsharepoint.AppConfig;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
@@ -70,7 +71,7 @@ public class PeerServer extends Thread{
                 // -----------------------------------------------------------
                 // start connection listener
                 // -----------------------------------------------------------
-                new MessageListener(client).start();
+                new MessageListener(this, client).start();
             }
             
             
@@ -78,6 +79,25 @@ public class PeerServer extends Thread{
             AppConfig.Instance().getReportDialog().LogMessage("Error: Unable to start server on port " 
                     + this._port + 
                     ". Maybe port is in use.");
+        }
+    }
+    
+    /**
+     * send message to client
+     * @param message
+     * @param client 
+     */
+    public void sendmessage(String message, Socket client){
+        try {
+            
+            // -----------------------------------------------------------
+            // send message
+            // -----------------------------------------------------------
+            DataOutputStream outputtoclient = new DataOutputStream(client.getOutputStream());
+            outputtoclient.writeUTF(message);
+            
+        } catch (IOException ex) {
+            System.err.println("Error: sending message to client.");
         }
     }
 }

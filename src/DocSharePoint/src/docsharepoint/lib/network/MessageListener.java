@@ -35,14 +35,16 @@ import java.net.Socket;
  */
 public class MessageListener extends Thread{
     private Socket _clientsocket;
+    private PeerServer _server;
     
     /**
      * contractor specifying server and client socket
      * @param server
      * @param client 
      */
-    public MessageListener(Socket client){
+    public MessageListener(PeerServer server, Socket client){
         this._clientsocket = client;
+        this._server = server;
     }
     
     /**
@@ -75,9 +77,15 @@ public class MessageListener extends Thread{
                         AppConfig.Instance().localNode.L.add(ni);
                         AppConfig.Instance().localNode.M.add(ni);
                         AppConfig.Instance().localNode.R.add(ni);
+                        
+                        this._server.sendmessage(AppConfig.Instance().localNode.getID().toString(), _clientsocket);
+                        AppConfig.Instance().getReportDialog().LogMessage("JOIN MESSAGE received.");
+                        
                         break;
+                    default:
+                        AppConfig.Instance().getReportDialog().LogMessage("Message received: "+msg.getMessage());
                 }
-                AppConfig.Instance().getReportDialog().LogMessage("Message received: "+msg.getMessage());
+                
             }
             
         } catch (IOException ex) {}

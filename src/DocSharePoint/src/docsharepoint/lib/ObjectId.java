@@ -18,29 +18,19 @@
  *  You should have received a copy of the GNU General Public License
  * along with this program.  If not, see <http://www.gnu.org/licenses/>.
  */
-
-package docsharepoint.lib.files;
+package docsharepoint.lib;
 
 /**
- * represents a file to be stored in pastry network
+ * represents the object id
  * @author George Karpouzas
  */
-public class PastFile {
-    private String _contents;
-
+public class ObjectId extends NodeId{
+    
     /**
-     * constructor specifying file contents
-     * @param contents
+     * constructor specifying file name
+     * @param filename 
      */
-    public PastFile(String contents){
-        _contents = contents;
-    }
-
-    /**
-     * get file contents
-     * @return String
-     */
-    public String getContents(){
-        return _contents;
+    public ObjectId(String filename){
+        super(filename);
     }
 }

@@ -21,14 +21,7 @@
 
 package docsharepoint.lib.files;
 
-import java.io.BufferedReader;
-import java.io.BufferedWriter;
-import java.io.File;
-import java.io.FileNotFoundException;
-import java.io.FileReader;
-import java.io.FileWriter;
-import java.io.IOException;
-import java.io.Writer;
+import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -46,17 +39,13 @@ public class FileManager {
     StringBuilder contents = new StringBuilder();
 
     try {
-      BufferedReader input =  new BufferedReader(new FileReader(f));
-      try {
-        String line = null;
+      try ( BufferedReader input = new BufferedReader(new FileReader(f))) {
+        String line;
 
         while (( line = input.readLine()) != null){
           contents.append(line);
           contents.append(System.getProperty("line.separator"));
         }
-      }
-      finally {
-        input.close();
       }
     }
     catch (IOException ex){
@@ -87,15 +76,9 @@ public class FileManager {
         if (!f.canWrite()) {
           throw new IllegalArgumentException("File cannot be written: " + f);
         }
-
-        //use buffering
-        Writer output = new BufferedWriter(new FileWriter(f));
-        try {
+        try (Writer output = new BufferedWriter(new FileWriter(f))) {
           //FileWriter always assumes default encoding is OK!
           output.write( contents );
-        }
-        finally {
-          output.close();
         }
     }
 
@@ -118,7 +101,7 @@ public class FileManager {
       public static List<File> getDirFiles(String folder, String extension){
         File directory = new File(folder);
         File[] listOfFiles = directory.listFiles();
-        List<File> files = new ArrayList<File>();
+        List<File> files = new ArrayList<>();
         if(listOfFiles==null)return null;
         for (int i = 0; i < listOfFiles.length; i++) {
             File f = listOfFiles[i];
