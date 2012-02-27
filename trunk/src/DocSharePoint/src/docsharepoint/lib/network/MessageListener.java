@@ -26,7 +26,6 @@ import docsharepoint.lib.NodeId;
 import docsharepoint.lib.ring.NodeInfo;
 import java.io.DataInputStream;
 import java.io.IOException;
-import java.math.BigInteger;
 import java.net.Socket;
 
 /**
@@ -35,7 +34,6 @@ import java.net.Socket;
  * @author George Karpouzas
  */
 public class MessageListener extends Thread{
-    private PeerServer _server;
     private Socket _clientsocket;
     
     /**
@@ -43,8 +41,7 @@ public class MessageListener extends Thread{
      * @param server
      * @param client 
      */
-    public MessageListener(PeerServer server, Socket client){
-        this._server = server;
+    public MessageListener(Socket client){
         this._clientsocket = client;
     }
     
