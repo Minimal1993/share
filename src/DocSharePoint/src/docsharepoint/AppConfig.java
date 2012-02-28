@@ -77,6 +77,11 @@ public final class AppConfig {
     private static int N = 32;
     
     /**
+     * objects replications
+     */
+    public int k = 10;
+    
+    /**
      * represents the local node
      */
     public Node localNode;
